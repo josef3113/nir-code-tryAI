@@ -18,6 +18,8 @@ namespace MatrixCheckers
         {
 
             MatrixCheckers Board = new MatrixCheckers(8);
+            BordToGame UiOfPlay = new BordToGame(8);
+
             // Board.PrintBoard();
 
             Board.PlayingVessel("Ac>Bd"); // Bf>Ce
