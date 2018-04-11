@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace MatrixCheckers
+namespace matricxChekerNotFork
 {
     class Program
     {
