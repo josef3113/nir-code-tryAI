@@ -7,8 +7,8 @@ namespace matricxChekers
 {
     class AiForDamka   //   jjj
     {
-        //private List<Locat> m_VellsOfComputer = new List<Locat>();
-        public string TheBestMoveToDo(CheckersLogic i_TheGameNow)
+        
+        public static string TheBestMoveToDo(CheckersLogic i_TheGameNow)
         {
             string activTheBest = "Non";
             Locat yaad ;
@@ -51,7 +51,7 @@ namespace matricxChekers
             //}
         }
 
-        public string MakeStringOfActive(Locat i_makor, Locat i_yaad)
+        private static string MakeStringOfActive(Locat i_makor, Locat i_yaad)
         {
             StringBuilder activeToReturn = new StringBuilder("Aa>Aa");
             activeToReturn[0] = (char)(i_makor.X + (byte)'A');

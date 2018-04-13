@@ -7,7 +7,7 @@ namespace MatrixCheckers
 {
     class GamePlay
     {
-        matricxChekers.AiForDamka smarter = new matricxChekers.AiForDamka();
+       
         CheckersLogic m_ActiveGame;
         BordToGame m_UiOfGame;
         byte m_Size;
@@ -77,7 +77,7 @@ namespace MatrixCheckers
                 {
                     if (itsVScomputer)
                     {
-                        moveInString = smarter.TheBestMoveToDo(m_ActiveGame);
+                        moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame);
                     }
                     else
                     {
