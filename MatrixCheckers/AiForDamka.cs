@@ -1,85 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using MatrixCheckers;
 
-namespace matricxChekerNotFork
+namespace matricxChekers
 {
     class AiForDamka   //   jjj
     {
-        private List<string> m_VellsOfComputer = new List<string>();
-
-        public void CreatVeesels()
+        //private List<Locat> m_VellsOfComputer = new List<Locat>();
+        public string TheBestMoveToDo(CheckersLogic i_TheGameNow)
         {
-            m_VellsOfComputer.Add("af");
-            m_VellsOfComputer.Add("bE");
+            string activTheBest = "Non";
+            Locat yaad ;
 
-
-
-        }
-
-        public void ChanghVeessl(string i_CurrentVessel, string  i_NewVessel)
-        {
-            m_VellsOfComputer.Remove(i_CurrentVessel);
-            m_VellsOfComputer.Add(i_NewVessel);
-        }
-        public void PrintVeelssOfComputer()
-        {
-            foreach (var item in m_VellsOfComputer)
+            foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
             {
-                Console.WriteLine(item);
-
-            }
-        }
-
-
-        public string active()
-        {
-            string activToDo = "Non";
-            
-            foreach (var makor in m_VellsOfComputer)
-            {
-                if (CanToEat(makor, yaad))
+                if (i_TheGameNow.CanToEat( makor,out yaad))
                 {
-                    activToDo = activToDo = MakeStringOfActive(makor, yaad);
+                    activTheBest = MakeStringOfActive(makor, yaad);
                     break;
                 }
             }
-
-            if(activToDo != "Non")
+            
+            if (activTheBest == "Non")
             {
-                foreach (var makor in m_VellsOfComputer)
+                foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
                 {
-                    if (CanMoveInSave(makor, yaad))
+                    if (i_TheGameNow.CanToMove(makor, out yaad))
                     {
-                        activToDo = activToDo = MakeStringOfActive(makor, yaad);
+                        activTheBest = MakeStringOfActive(makor, yaad);
                         break;
                     }
                 }
 
             }
-            if (activToDo != "Non")
-            {
-                foreach (var makor in m_VellsOfComputer)
-                {
-                    if (CanMove(makor, yaad))// yaad is out parameter 
-                    {
-                        activToDo = MakeStringOfActive(makor, yaad);
-                        break;
-                    }
-                }
 
-            }
+            return activTheBest;
+
+            //if (activToDo != "Non")
+            //{
+            //    foreach (var makor in i_VellsOfComputer)
+            //    {
+            //        if (CanMove(makor, yaad))// yaad is out parameter 
+            //        {
+            //            activToDo = MakeStringOfActive(makor, yaad);
+            //            break;
+            //        }
+            //    }
+
+            //}
         }
 
-        public MakeStringOfActive(byte[,] makor, byte[,] yaad)
+        public string MakeStringOfActive(Locat i_makor, Locat i_yaad)
         {
-            StringBuilder active;
-            active[0] = makor[1] + 'A';
-            active[1] = makor[0] + 'a';
-            active[2] = '>';
-            active[3] = yaad[1] + 'A';
-            active[4] = yaad[0] + 'a';
+            StringBuilder activeToReturn = new StringBuilder("Aa>Aa");
+            activeToReturn[0] = (char)(i_makor.X + (byte)'A');
+            activeToReturn[1] = (char)(i_makor.Y + (byte)'a');
+            activeToReturn[2] = '>';
+            activeToReturn[3] = (char)(i_yaad.X + (byte)'A');
+            activeToReturn[4] = (char)(i_yaad.Y + (byte)'a');
 
+            return activeToReturn.ToString();
         }
 
 
