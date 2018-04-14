@@ -1,4 +1,4 @@
-﻿// 13/04/2018  20:20
+﻿//14/04/2018  15:00
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,18 +8,41 @@ namespace MatrixCheckers
 {
     class GamePlay
     {
-       
+        //yosi start
+        Player m_player1;
+        Player m_player2;
+        // yosiend
+
         CheckersLogic m_ActiveGame;
         BordToGame m_UiOfGame;
         byte m_Size;
 
         public GamePlay(byte i_Size = 8)
         {
+            //yosi start 
+            m_player1 = new Player();
+            m_player2 = new Player();
+            m_player1.Name = "avi";
+            //yosi end
             m_Size = i_Size;
             m_ActiveGame = new CheckersLogic(i_Size);
             m_UiOfGame = new BordToGame(i_Size);
 
         }
+        // yosi start
+        public GamePlay(Player i_player1, Player i_player2, byte i_Size = 8 )
+        {
+            m_player1 = i_player1;
+            m_player2 = i_player2;
+
+
+            m_Size = i_Size;
+            m_ActiveGame = new CheckersLogic(i_Size);
+            m_UiOfGame = new BordToGame(i_Size);
+
+        }
+
+        // yosi end
 
         public void StartGameToPlay()
         {
@@ -49,13 +72,13 @@ namespace MatrixCheckers
 
                 const bool player1 = true;
                 
-                Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ? "Player1" : "Player2");
+                Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ? m_player1.Name : m_player2.Name);
 
                 string moveInString;
 
                 // yosi start 
 
-                bool itsVScomputer = true;
+                //bool itsVScomputer = true;
 
                 //if (indexMoves < gameMoveLazy.Length)
                 //{
@@ -77,7 +100,7 @@ namespace MatrixCheckers
                 }
                 else
                 {
-                    if (itsVScomputer)
+                    if (m_player2.Name == "computer")
                     {
                         moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame);
                     }

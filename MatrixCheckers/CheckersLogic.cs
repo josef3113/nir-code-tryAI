@@ -1,4 +1,4 @@
-﻿//13/04/2018  20:20
+﻿//14/04/2018  15:00
 
 using System;
 using System.Collections.Generic;
@@ -32,7 +32,7 @@ namespace MatrixCheckers
         public bool NowPlaying { get; private set; } = k_Player1; // it is changed . Look out.
         public bool IsTurnPass { get; private set; } = false; // isTurnPass
         public bool IsEated { get; private set; } = false;
-        //yosi st
+        //yosi start
         private List<Locat> m_VellsOfPlayer1 = new List<Locat>();
         //its public for Ai
         public List<Locat> m_VellsOfPlayer2 = new List<Locat>(); 

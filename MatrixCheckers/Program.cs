@@ -1,4 +1,4 @@
-﻿// its of time 13/04/2018  16:01
+﻿//14/04/2018  15:00
 
 using System;
 using System.Text;
@@ -44,13 +44,17 @@ namespace MatrixCheckers
         //yosi start
         public static void Playingyosi()
         {
-            GamePlay game = new GamePlay(8);
+            
 
             
             Player p1 = new Player();
             Player p2 = new Player();
             p1.Name = Console.ReadLine();
+            p2.Name = Console.ReadLine();
 
+            // here add switch case whit enum about size board and player 2
+
+            GamePlay game = new GamePlay(p1,p2,8);
             game.StartGameToPlay();
 
 

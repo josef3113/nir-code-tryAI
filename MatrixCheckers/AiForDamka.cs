@@ -1,4 +1,4 @@
-﻿//13/04/2018 20:20
+﻿//14/04/2018 15:00
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +8,8 @@ namespace matricxChekers
 {
     class AiForDamka   //   jjj
     {
-        
-        public static string TheBestMoveToDo(CheckersLogic i_TheGameNow)
+       const bool player1 = true;
+        public static string TheBestMoveToDo(CheckersLogic i_TheGameNow , bool i_PlayerToCheck = !player1 )
         {
             bool foundActiveToDo = false;
             string activTheBest = null ;
@@ -27,7 +27,7 @@ namespace matricxChekers
             //{
             //    foundActiveToDo = true;
             //}
-            foundActiveToDo = computerCanToEat(i_TheGameNow, out activTheBest);
+            foundActiveToDo = computerCanToEat(i_TheGameNow, out activTheBest );
             
             if (! foundActiveToDo)
             {
@@ -73,7 +73,7 @@ namespace matricxChekers
             return activeToReturn.ToString();
         }
 
-        private static bool computerCanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat)
+        private static bool computerCanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat, bool i_PlayerToCheck = !player1)
         {
             o_ActiveToEat = "NonActive";
             bool computerCanToEat = false;
@@ -92,7 +92,7 @@ namespace matricxChekers
 
         }
 
-        private static bool computerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove)
+        private static bool computerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove, bool i_PlayerToCheck = !player1)
         {
             o_ActiveToMove = "NonActive";
             bool computerCanToMove = false;
