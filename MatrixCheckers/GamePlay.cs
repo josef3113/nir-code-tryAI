@@ -18,6 +18,7 @@ namespace MatrixCheckers
             m_Size = i_Size;
             m_ActiveGame = new CheckersLogic(i_Size);
             m_UiOfGame = new BordToGame(i_Size);
+
         }
 
         public void StartGameToPlay()
