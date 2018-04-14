@@ -11,32 +11,39 @@ namespace matricxChekers
         
         public static string TheBestMoveToDo(CheckersLogic i_TheGameNow)
         {
-            string activTheBest = "Non";
+            bool foundActiveToDo = false;
+            string activTheBest = null ;
             Locat yaad ;
 
-            foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
-            {
-                if (i_TheGameNow.CanToEat( makor,out yaad))
-                {
-                    activTheBest = MakeStringOfActive(makor, yaad);
-                    break;
-                }
-            }
+            //foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
+            //{
+            //    if (i_TheGameNow.CanToEat( makor,out yaad))
+            //    {
+            //        activTheBest = makeStringOfActive(makor, yaad);
+            //        break;
+            //    }
+            //}
+            //if(computerCanToEat(i_TheGameNow,out activTheBest))
+            //{
+            //    foundActiveToDo = true;
+            //}
+            foundActiveToDo = computerCanToEat(i_TheGameNow, out activTheBest);
             
-            if (activTheBest == "Non")
+            if (! foundActiveToDo)
             {
-                foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
-                {
-                    if (i_TheGameNow.CanToMove(makor, out yaad))
-                    {
-                        activTheBest = MakeStringOfActive(makor, yaad);
-                        break;
-                    }
-                }
 
+                foundActiveToDo = computerCanToMove(i_TheGameNow, out activTheBest);
+                //foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
+                //{
+                //    if (i_TheGameNow.CanToMove(makor, out yaad))
+                //    {
+                //        activTheBest = makeStringOfActive(makor, yaad);
+                //        break;
+                //    }
+                //}
             }
 
-            return activTheBest;
+
 
             //if (activToDo != "Non")
             //{
@@ -50,9 +57,11 @@ namespace matricxChekers
             //    }
 
             //}
+
+            return activTheBest;
         }
 
-        private static string MakeStringOfActive(Locat i_makor, Locat i_yaad)
+        private static string makeStringOfActive(Locat i_makor, Locat i_yaad)
         {
             StringBuilder activeToReturn = new StringBuilder("Aa>Aa");
             activeToReturn[0] = (char)(i_makor.X + (byte)'A');
@@ -62,6 +71,44 @@ namespace matricxChekers
             activeToReturn[4] = (char)(i_yaad.Y + (byte)'a');
 
             return activeToReturn.ToString();
+        }
+
+        private static bool computerCanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat)
+        {
+            o_ActiveToEat = "NonActive";
+            bool computerCanToEat = false;
+            Locat yaad;
+            foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
+            {
+                if (i_TheGameNow.CanToEat(makor, out yaad))
+                {
+                    o_ActiveToEat = makeStringOfActive(makor, yaad);
+                    computerCanToEat = true;
+                    break;
+                }
+            }
+
+            return computerCanToEat;
+
+        }
+
+        private static bool computerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove)
+        {
+            o_ActiveToMove = "NonActive";
+            bool computerCanToMove = false;
+            Locat yaad;
+            foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
+            {
+                if (i_TheGameNow.CanToMove(makor, out yaad))
+                {
+                    o_ActiveToMove = makeStringOfActive(makor, yaad);
+                    computerCanToMove = true;
+                    break;
+                }
+            }
+
+            return computerCanToMove;
+
         }
 
 
