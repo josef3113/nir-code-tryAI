@@ -25,6 +25,7 @@ namespace MatrixCheckers
                         Console.WriteLine("wrong name insert another name");
                         value = Console.ReadLine();
                     }
+                    m_Name = value;
 
 
                 }

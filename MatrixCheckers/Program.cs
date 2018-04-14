@@ -49,10 +49,10 @@ namespace MatrixCheckers
 
             Player p1 = new Player();
             Player p2 = new Player();
-            Console.WriteLine("insert your name");
+            Console.WriteLine("insert your name =not contains space and in lenght of 20 letter but not computer" );
             p1.Name = Console.ReadLine();
 
-            eChoisForSizeGame chosSize;
+            
 
             string optionOfSizeGame = string.Format(
 @"==========================
@@ -64,16 +64,15 @@ insert 3 for game in size 10"
                 );
 
             Console.WriteLine(optionOfSizeGame);
-            string choichOfPlayer;
-
+           
+            eChoisForSizeGame chosSize;
             bool itsLegalInput = false;
             byte sizeOfGame = 0;
 
             while (!itsLegalInput)
             {
-                Console.WriteLine("insert your number");
-                choichOfPlayer = Console.ReadLine();
-                chosSize = (eChoisForSizeGame)byte.Parse(choichOfPlayer);
+                Console.WriteLine("insert size of board that you want");
+                chosSize = (eChoisForSizeGame)byte.Parse(Console.ReadLine());
                 switch (chosSize)
                 {
                     case eChoisForSizeGame.SizeIs6:
@@ -102,7 +101,7 @@ insert 3 for game in size 10"
             chosOnePlayerOrTwo = byte.Parse(Console.ReadLine());
             if (chosOnePlayerOrTwo != (byte)1)
             {
-                Console.WriteLine("insert the name of player two");
+                Console.WriteLine("insert secound name = not contains space and in lenght of 20 letter but not computer");
                 p2.Name = Console.ReadLine();
             }
 
