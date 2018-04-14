@@ -10,7 +10,8 @@ namespace MatrixCheckers
     {
         static void Main(string[] args)
         {
-
+            //yosi start
+            Playingyosi();
 
             // Playing();
 
@@ -18,7 +19,8 @@ namespace MatrixCheckers
 
             //  Playing3();
 
-            Playing4();
+           // Playing4();
+            
 
             // PlayingTestLogic();
 
@@ -36,6 +38,24 @@ namespace MatrixCheckers
             //}
             // Console.ReadLine();
         }
+
+
+        //yosi start
+        public static void Playingyosi()
+        {
+            GamePlay game = new GamePlay(8);
+
+            
+            Player p1 = new Player();
+            Player p2 = new Player();
+            p1.Name = Console.ReadLine();
+
+            game.StartGameToPlay();
+
+
+
+        }
+        // yosi end
 
         public static void PlayingTestLogic()
         {
