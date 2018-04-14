@@ -101,7 +101,7 @@ namespace MatrixCheckers
                 else
                 {
                     if (m_player2.Name == "computer")
-                    {
+                    { 
                         moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame, !player1);
                     }
                     else
