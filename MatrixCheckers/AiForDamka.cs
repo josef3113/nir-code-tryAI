@@ -8,8 +8,8 @@ namespace matricxChekers
 {
     class AiForDamka   //   jjj
     {
-       const bool player1 = true;
-        public static string TheBestMoveToDo(CheckersLogic i_TheGameNow , bool i_PlayerToCheck = !player1 )
+       const bool m_player1 = true;
+        public static string TheBestMoveToDo(CheckersLogic i_TheGameNow , bool i_PlayerToCheck )
         {
             bool foundActiveToDo = false;
             string activTheBest = null ;
@@ -27,12 +27,12 @@ namespace matricxChekers
             //{
             //    foundActiveToDo = true;
             //}
-            foundActiveToDo = computerCanToEat(i_TheGameNow, out activTheBest );
+            foundActiveToDo = thisPlayerCanToEat(i_TheGameNow, out activTheBest , i_PlayerToCheck );
             
             if (! foundActiveToDo)
             {
 
-                foundActiveToDo = computerCanToMove(i_TheGameNow, out activTheBest);
+                foundActiveToDo = thisPlayerCanToMove(i_TheGameNow, out activTheBest , i_PlayerToCheck);
                 //foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
                 //{
                 //    if (i_TheGameNow.CanToMove(makor, out yaad))
@@ -73,41 +73,61 @@ namespace matricxChekers
             return activeToReturn.ToString();
         }
 
-        private static bool computerCanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat, bool i_PlayerToCheck = !player1)
+        private static bool thisPlayerCanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat, bool i_PlayerToCheck = !m_player1)
         {
             o_ActiveToEat = "NonActive";
-            bool computerCanToEat = false;
+            bool playerCanToEat = false;
+            List<Locat> listOfPlayerToCheck;
             Locat yaad;
-            foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
+
+            if (i_PlayerToCheck == m_player1)
+            {
+                listOfPlayerToCheck = i_TheGameNow.m_VellsOfPlayer1;
+            }
+            else
+            {
+                listOfPlayerToCheck = i_TheGameNow.m_VellsOfPlayer2;
+            }
+            
+            foreach (var makor in listOfPlayerToCheck)
             {
                 if (i_TheGameNow.CanToEat(makor, out yaad))
                 {
                     o_ActiveToEat = makeStringOfActive(makor, yaad);
-                    computerCanToEat = true;
+                    playerCanToEat = true;
                     break;
                 }
             }
 
-            return computerCanToEat;
+            return playerCanToEat;
 
         }
 
-        private static bool computerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove, bool i_PlayerToCheck = !player1)
+        private static bool thisPlayerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove, bool i_PlayerToCheck = !m_player1)
         {
             o_ActiveToMove = "NonActive";
-            bool computerCanToMove = false;
+            bool playerCanToMove = false;
             Locat yaad;
-            foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
+            List<Locat> listOfPlayerToCheck;
+            if (i_PlayerToCheck == m_player1)
+            {
+                listOfPlayerToCheck = i_TheGameNow.m_VellsOfPlayer1;
+            }
+            else
+            {
+                listOfPlayerToCheck = i_TheGameNow.m_VellsOfPlayer2;
+            }
+            foreach (var makor in listOfPlayerToCheck)
             {
                 if (i_TheGameNow.CanToMove(makor, out yaad))
                 {
                     o_ActiveToMove = makeStringOfActive(makor, yaad);
-                    computerCanToMove = true;
+                    playerCanToMove = true;
                     break;
                 }
             }
 
-            return computerCanToMove;
+            return playerCanToMove;
 
         }
 

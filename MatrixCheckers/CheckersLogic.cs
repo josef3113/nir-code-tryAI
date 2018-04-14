@@ -33,7 +33,7 @@ namespace MatrixCheckers
         public bool IsTurnPass { get; private set; } = false; // isTurnPass
         public bool IsEated { get; private set; } = false;
         //yosi start
-        private List<Locat> m_VellsOfPlayer1 = new List<Locat>();
+        public List<Locat> m_VellsOfPlayer1 = new List<Locat>();
         //its public for Ai
         public List<Locat> m_VellsOfPlayer2 = new List<Locat>(); 
 

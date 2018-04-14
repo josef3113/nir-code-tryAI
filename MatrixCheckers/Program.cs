@@ -50,7 +50,7 @@ namespace MatrixCheckers
             Player p1 = new Player();
             Player p2 = new Player();
             p1.Name = Console.ReadLine();
-            p2.Name = Console.ReadLine();
+           // p2.Name = Console.ReadLine();
 
             // here add switch case whit enum about size board and player 2
 
