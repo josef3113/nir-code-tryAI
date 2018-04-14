@@ -20,8 +20,8 @@ namespace MatrixCheckers
 
             //  Playing3();
 
-           // Playing4();
-            
+            // Playing4();
+
 
             // PlayingTestLogic();
 
@@ -44,21 +44,85 @@ namespace MatrixCheckers
         //yosi start
         public static void Playingyosi()
         {
-            
 
-            
+
+
             Player p1 = new Player();
             Player p2 = new Player();
+            Console.WriteLine("insert your name");
             p1.Name = Console.ReadLine();
-           // p2.Name = Console.ReadLine();
+
+            eChoisForSizeGame chosSize;
+
+            string optionOfSizeGame = string.Format(
+@"==========================
+insert 1 for game in size 6
+insert 2 for game in size 8
+insert 3 for game in size 10"
+
+
+                );
+
+            Console.WriteLine(optionOfSizeGame);
+            string choichOfPlayer;
+
+            bool itsLegalInput = false;
+            byte sizeOfGame = 0;
+
+            while (!itsLegalInput)
+            {
+                Console.WriteLine("insert your number");
+                choichOfPlayer = Console.ReadLine();
+                chosSize = (eChoisForSizeGame)byte.Parse(choichOfPlayer);
+                switch (chosSize)
+                {
+                    case eChoisForSizeGame.SizeIs6:
+                        sizeOfGame = (byte)6;
+                        itsLegalInput = true;
+                        break;
+                    case eChoisForSizeGame.SizeIs8:
+                        sizeOfGame = (byte)8;
+                        itsLegalInput = true;
+                        break;
+                    case eChoisForSizeGame.SizeIs10:
+                        sizeOfGame = (byte)10;
+                        itsLegalInput = true;
+                        break;
+                    default:
+                        //itsLegalInput = false;
+                        break;
+
+                }
+
+
+            }
+
+            byte chosOnePlayerOrTwo;
+            Console.WriteLine("insert 1 if you want to play vs computer any ather if you want two player");
+            chosOnePlayerOrTwo = byte.Parse(Console.ReadLine());
+            if (chosOnePlayerOrTwo != (byte)1)
+            {
+                Console.WriteLine("insert the name of player two");
+                p2.Name = Console.ReadLine();
+            }
+
+            // p2.Name = Console.ReadLine();
 
             // here add switch case whit enum about size board and player 2
 
-            GamePlay game = new GamePlay(p1,p2,8);
+            GamePlay game = new GamePlay(p1, p2, sizeOfGame);
             game.StartGameToPlay();
 
 
 
+        }
+
+        public enum eChoisForSizeGame : byte
+        {
+
+            SizeIs6 = 1,
+            SizeIs8,
+            SizeIs10
         }
         // yosi end
 
