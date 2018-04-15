@@ -61,6 +61,20 @@ namespace matricxChekers
             return activTheBest;
         }
 
+
+        public static string TheMoveToDoForMultiEating(CheckersLogic i_TheGameNow, string i_LastMove)
+        {
+            string activeToContinueEat = null;
+            Locat forChech = new Locat((int)(i_LastMove[3]-'A'), (int)(i_LastMove[4]-'a'));
+            Locat yaad;
+            i_TheGameNow.CanToMultiEat(forChech, out yaad);
+            activeToContinueEat = makeStringOfActive(forChech, yaad);
+
+
+            return activeToContinueEat;
+        }
+
+
         private static string makeStringOfActive(Locat i_makor, Locat i_yaad)
         {
             StringBuilder activeToReturn = new StringBuilder("Aa>Aa");

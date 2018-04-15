@@ -12,7 +12,7 @@ namespace MatrixCheckers
         Player m_player1;
         Player m_player2;
         // yosiend
-
+        const bool player1 = true;
         CheckersLogic m_ActiveGame;
         BordToGame m_UiOfGame;
         byte m_Size;
@@ -47,30 +47,13 @@ namespace MatrixCheckers
         public void StartGameToPlay()
         {
             byte indexMoves = 0; // // rember to erase one day 
-
-
-            /*
-            Ai comp;
-
-            if (vsComp == true)
-            {
-                comp = new Ai();
-
-            }
-            else
-            {
-
-                P2 name2 = "Hello";
-            }
-            */
-
             string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd", "Ed>Fe" }; // rember to erase one day 
             string[] gameForYosi = { "Hc>Gd", "Gd>He" };
             while (m_ActiveGame.GameOn() == true)
             {
                 m_UiOfGame.PrintBoardGame();
 
-                const bool player1 = true;
+                
 
                 Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ? m_player1.Name : m_player2.Name);
 
@@ -140,6 +123,7 @@ namespace MatrixCheckers
         {
             byte indexX , indexY;
 
+
             CheckersLogic.charsToIndex(out indexX, i_MoveInString[3], out indexY, i_MoveInString[4]);
 
             while (m_ActiveGame.checkingBounderis(indexX, indexY))
@@ -147,7 +131,23 @@ namespace MatrixCheckers
 
                 m_UiOfGame.PrintBoardGame();
                 Console.WriteLine("Eat Again , From GamePlay !!");
-                i_MoveInString = InputChecking();
+                if(m_ActiveGame.NowPlaying == player1)
+                {
+                    i_MoveInString = InputChecking();
+                }
+                else
+                {
+                    if (m_player2.Name == "computer")
+                    {
+                        i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame,i_MoveInString);
+                    }
+                    else
+                    {
+                        i_MoveInString = InputChecking();
+                    }
+
+                }
+                
                 if (i_MoveInString != null)
                 {
                     byte inputIndex2X, inputIndex2Y, inputIndex1X, inputIndex1Y;

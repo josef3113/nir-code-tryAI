@@ -524,6 +524,93 @@ namespace MatrixCheckers
             return foundGoodPlace;
         }
 
+        // yosi 
+        public bool CanToMultiEat(Locat i_IndexesToPlay, out Locat o_IndexesThatLegal)
+        //yossi end
+        {
+            bool foundGoodPlace = false;
+
+
+            byte start = 0, end = (byte)(m_Size - 1);
+            //yosi start
+            // byte indexX = i_IndexesToPlay[0], indexY = i_IndexesToPlay[1];
+            o_IndexesThatLegal = new Locat();
+            byte indexX = i_IndexesToPlay.X, indexY = i_IndexesToPlay.Y;
+            //yosi end
+            bool isRightUpSpotLegal = (indexX + 2 <= end) && (indexY - 2 >= start);
+            bool isLeftUpSpotLegal = (indexX - 2 >= start) && (indexY - 2 >= start);
+
+            if (isRightUpSpotLegal)
+            {
+                if (isHaveEnemyInCrossToEat((byte)(indexX + 1), (byte)(indexY - 1), (byte)(indexX + 2), (byte)(indexY - 2)))
+                {
+                    //yosi start 
+                    //i_IndexesThatLegal[0] = (byte)(indexX + 2);
+                    // i_IndexesThatLegal[1] = (byte)(indexY - 2);
+
+                    o_IndexesThatLegal.X = (byte)(indexX + 2);
+                    o_IndexesThatLegal.Y = (byte)(indexY - 2);
+                    //yosiend
+                    foundGoodPlace = true;
+                }
+            }
+
+            if (isLeftUpSpotLegal && foundGoodPlace == false)
+            {
+                if (isHaveEnemyInCrossToEat((byte)(indexX - 1), (byte)(indexY - 1), (byte)(indexX - 2), (byte)(indexY - 2)))
+                {
+                    //yosi start
+                    o_IndexesThatLegal.X = (byte)(indexX - 2);
+                    o_IndexesThatLegal.Y = (byte)(indexY - 2);
+
+                    // i_IndexesThatLegal[0] = (byte)(indexX - 2);
+                    // i_IndexesThatLegal[1] = (byte)(indexY - 2);
+                    //yosi end 
+                    foundGoodPlace = true;
+                }
+            }
+
+        
+                bool isRightDownSpotLegal = (indexX + 2 <= end) && (indexY + 2 <= end);
+                bool isLeftDownSpotLegal = (indexX - 2 >= start) && (indexY + 2 <= end);
+
+                if (isRightDownSpotLegal)
+                {
+                    if (isHaveEnemyInCrossToEat((byte)(indexX + 1), (byte)(indexY + 1), (byte)(indexX + 2), (byte)(indexY + 2)))
+                    {
+                        //yosi start
+                        // i_IndexesThatLegal[0] = (byte)(indexX + 2);
+                        // i_IndexesThatLegal[1] = (byte)(indexY + 2);
+
+                        o_IndexesThatLegal.X = (byte)(indexX + 2);
+                        o_IndexesThatLegal.Y = (byte)(indexY + 2);
+
+                        //yosi end
+                        foundGoodPlace = true;
+                    }
+                }
+
+                if (isLeftDownSpotLegal && foundGoodPlace == false)
+                {
+                    if (isHaveEnemyInCrossToEat((byte)(indexX - 1), (byte)(indexY + 1), (byte)(indexX - 2), (byte)(indexY + 2)))
+                    {
+                        //yosi start
+                        //i_IndexesThatLegal[0] = (byte)(indexX - 2);
+                        // i_IndexesThatLegal[1] = (byte)(indexY + 2);
+
+                        o_IndexesThatLegal.X = (byte)(indexX - 2);
+                        o_IndexesThatLegal.Y = (byte)(indexY + 2);
+
+                        //yosi end
+                        foundGoodPlace = true;
+                    }
+                }
+
+            
+
+            return foundGoodPlace;
+        }
+
 
         /*
         bool CanToMoveAndClearAround(byte[] i_IndexesToPlay, out byte[] i_IndexesThatLegal)
@@ -536,7 +623,7 @@ namespace MatrixCheckers
         */
 
         // yosi start
-       // public bool CanToMove(byte[] i_IndexesToPlay, byte[] i_IndexesThatLegal)
+        // public bool CanToMove(byte[] i_IndexesToPlay, byte[] i_IndexesThatLegal)
         public bool CanToMove(Locat i_IndexesToPlay, out Locat o_IndexesThatLegal)
         // yosi end
         {
