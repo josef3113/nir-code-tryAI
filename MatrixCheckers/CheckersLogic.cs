@@ -343,11 +343,13 @@ namespace MatrixCheckers
                 if (NowPlaying == k_Player1)
                 {
                     ChanghVeesslInList(m_VellsOfPlayer1, original, newVessel);
+                    sortListOfVesselBecomingFirst(m_VellsOfPlayer1);
                     m_VellsOfPlayer2.Remove(isEatedNow);
                 }
                 else
                 {
                     ChanghVeesslInList(m_VellsOfPlayer2, original, newVessel);
+                    sortListOfVesselBecomingFirst(m_VellsOfPlayer2);
                     m_VellsOfPlayer1.Remove(isEatedNow);
                 }
 
