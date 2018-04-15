@@ -21,7 +21,7 @@ namespace MatrixCheckers
         private int Compare(Locat i_Other)
         {
             int result = 0;
-            if(this.Y > i_Other.Y)
+            if (this.Y > i_Other.Y)
             {
                 result = 1;
             }
@@ -46,7 +46,7 @@ namespace MatrixCheckers
         //yosi start
         public List<Locat> m_VellsOfPlayer1 = new List<Locat>();
         //its public for Ai
-        public List<Locat> m_VellsOfPlayer2 = new List<Locat>(); 
+        public List<Locat> m_VellsOfPlayer2 = new List<Locat>();
 
         public void ChanghVeesslInList(List<Locat> i_VellsOfPlayer, Locat i_CurrentVessel, Locat i_NewVessel)
         {
@@ -62,7 +62,7 @@ namespace MatrixCheckers
                 else if (locat1.Y > locat2.Y) return 1;
                 else return locat1.Y.CompareTo(locat2.Y);
             });
-               
+
         }
 
         public void PrintVeelssInList(List<Locat> i_VellsOfPlayer)
@@ -172,7 +172,7 @@ namespace MatrixCheckers
         public bool PlayingVessel(string i_MovePos) // maybe change to PlayingTurn .
         {
             // here add if  to cover all the method for right or wrong input ! .!!
-           
+
             IsEated = false;
 
             //if (IsTurnPass == true)
@@ -239,7 +239,7 @@ namespace MatrixCheckers
 
         private void eatOrMoveVessel(byte vesselOneX, byte vesselOneY, byte vesselTwoX, byte vesselTwoY)
         {
-           
+
 
             const byte oneStepMoveInCross = 1, twoStepsMoveInCross = 2;
 
@@ -249,29 +249,33 @@ namespace MatrixCheckers
             }
             else if (checkMoveInCross(twoStepsMoveInCross, vesselOneX, vesselOneY, vesselTwoX, vesselTwoY))
             {
-            eatEnemyVessel(vesselOneX, vesselOneY, vesselTwoX, vesselTwoY);
+                eatEnemyVessel(vesselOneX, vesselOneY, vesselTwoX, vesselTwoY);
             }
             else
             {
                 Console.WriteLine("illegal move , you can only move in cross one step or eat in cross . try again.");
             }
-            
+
         }
 
-        public bool checkIfBecomeKing(ref byte io_Vessel, byte i_LineY)
+        public bool checkIfBecomeKing(byte i_LineX, byte i_LineY)
         {
-            bool becomeKing = false;
+            bool becomeKing = true;
+            if (i_LineY == 0 && m_Mat[i_LineY, i_LineX] == (byte)eCheckers.CheckerX)
+            {
+                m_Mat[i_LineY, i_LineX] = (byte)eCheckers.CheckerK;
 
-            if (i_LineY == 0 && io_Vessel == (byte)eCheckers.CheckerX)
-            {
-                becomeKing = true;
-                io_Vessel = (byte)eCheckers.CheckerK;
             }
-            else if (i_LineY == (m_Size - 1) && io_Vessel == (byte)eCheckers.CheckerO)
+            else if (i_LineY == (m_Size - 1) && m_Mat[i_LineY, i_LineX] == (byte)eCheckers.CheckerO)
             {
-                becomeKing = true;
-                io_Vessel = (byte)eCheckers.CheckerU;
-            }              
+
+                m_Mat[i_LineY, i_LineX] = (byte)eCheckers.CheckerU;
+
+            }
+            else
+            {
+                becomeKing = false;
+            }
 
             return becomeKing;
         }
@@ -282,10 +286,7 @@ namespace MatrixCheckers
 
             if (m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX] == (byte)eCheckers.Non)
             {
-                m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX] = m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX];
-                m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX] = (byte)eCheckers.Non; // (byte) eCheckers.Non == 0   
-
-                checkIfBecomeKing(ref m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX], i_IndexOfVesselTwoY);
+                ExuteMove(i_IndexOfVesselOneX, i_IndexOfVesselOneY, i_IndexOfVesselTwoX, i_IndexOfVesselTwoY);
 
                 IsTurnPass = true;
                 // yossi move vessel
@@ -320,18 +321,16 @@ namespace MatrixCheckers
         private void eatEnemyVessel(byte i_IndexOfVesselOneX, byte i_IndexOfVesselOneY, byte i_IndexOfVesselTwoX, byte i_IndexOfVesselTwoY)
         { //// te bool return is for check if all did appened and not need replay turn . if the bool not needed so to replace to void .
 
-            
+
             byte middleIndexX = (byte)((i_IndexOfVesselTwoX + i_IndexOfVesselOneX) / 2);
             byte middleIndexY = (byte)((i_IndexOfVesselOneY + i_IndexOfVesselTwoY) / 2);
 
             if (isHaveEnemyInCrossToEat(middleIndexX, middleIndexY, i_IndexOfVesselTwoX, i_IndexOfVesselTwoY))
             {
-                m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX] = m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX];
-                m_Mat[middleIndexY, middleIndexX] = (byte)eCheckers.Non; // eCheckers.Non = 0
-                m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX] = (byte)eCheckers.Non;
+                IsEated = true;
+                ExuteMove(i_IndexOfVesselOneX, i_IndexOfVesselOneY, i_IndexOfVesselTwoX, i_IndexOfVesselTwoY);
 
-                checkIfBecomeKing(ref m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX], i_IndexOfVesselTwoY);
-               
+
                 IsTurnPass = true;
 
                 // yossi move vessel
@@ -353,27 +352,39 @@ namespace MatrixCheckers
                 }
 
                 // yosi end 
-                IsEated = true;
-                
+
             }
             else
             {
                 Console.WriteLine("Cant jump so far without Eat. - you cant eat nothing or yourself - . try again.");
             }
-            
+
         }
-        
+
+        private void ExuteMove(byte i_IndexOfVesselOneX, byte i_IndexOfVesselOneY, byte i_IndexOfVesselTwoX, byte i_IndexOfVesselTwoY)
+        {
+            m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX] = m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX];
+            m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX] = (byte)eCheckers.Non;
+
+            if (IsEated == true)
+            {
+                byte middleIndexX = (byte)((i_IndexOfVesselTwoX + i_IndexOfVesselOneX) / 2);
+                byte middleIndexY = (byte)((i_IndexOfVesselOneY + i_IndexOfVesselTwoY) / 2);
+                m_Mat[middleIndexY, middleIndexX] = (byte)eCheckers.Non; // eCheckers.Non = 0
+            }
+        }
+
         public void eatWithSameSoilder(byte indexInput1X, byte indexInput1Y, byte indexInput2X, byte indexInput2Y)
         {
-                IsEated = false;
-          
+            IsEated = false;
+
             if (checkMoveInCross(2, indexInput1X, indexInput1Y, indexInput2X, indexInput2Y))
             {
 
                 Console.WriteLine("isin cross of 2");
 
                 eatEnemyVessel(indexInput1X, indexInput1Y, indexInput2X, indexInput2Y);
-                
+
             }
 
         }
@@ -436,11 +447,11 @@ namespace MatrixCheckers
 
         // yssi start
         //public bool CanToEat(byte[] i_IndexesToPlay, byte[] i_IndexesThatLegal)
-        public bool CanToEat(Locat i_IndexesToPlay,out Locat o_IndexesThatLegal)
+        public bool CanToEat(Locat i_IndexesToPlay, out Locat o_IndexesThatLegal)
         //yossi end
         {
             bool foundGoodPlace = false;
-            
+
 
             byte start = 0, end = (byte)(m_Size - 1);
             //yosi start
@@ -570,43 +581,43 @@ namespace MatrixCheckers
                 }
             }
 
-        
-                bool isRightDownSpotLegal = (indexX + 2 <= end) && (indexY + 2 <= end);
-                bool isLeftDownSpotLegal = (indexX - 2 >= start) && (indexY + 2 <= end);
 
-                if (isRightDownSpotLegal)
+            bool isRightDownSpotLegal = (indexX + 2 <= end) && (indexY + 2 <= end);
+            bool isLeftDownSpotLegal = (indexX - 2 >= start) && (indexY + 2 <= end);
+
+            if (isRightDownSpotLegal)
+            {
+                if (isHaveEnemyInCrossToEat((byte)(indexX + 1), (byte)(indexY + 1), (byte)(indexX + 2), (byte)(indexY + 2)))
                 {
-                    if (isHaveEnemyInCrossToEat((byte)(indexX + 1), (byte)(indexY + 1), (byte)(indexX + 2), (byte)(indexY + 2)))
-                    {
-                        //yosi start
-                        // i_IndexesThatLegal[0] = (byte)(indexX + 2);
-                        // i_IndexesThatLegal[1] = (byte)(indexY + 2);
+                    //yosi start
+                    // i_IndexesThatLegal[0] = (byte)(indexX + 2);
+                    // i_IndexesThatLegal[1] = (byte)(indexY + 2);
 
-                        o_IndexesThatLegal.X = (byte)(indexX + 2);
-                        o_IndexesThatLegal.Y = (byte)(indexY + 2);
+                    o_IndexesThatLegal.X = (byte)(indexX + 2);
+                    o_IndexesThatLegal.Y = (byte)(indexY + 2);
 
-                        //yosi end
-                        foundGoodPlace = true;
-                    }
+                    //yosi end
+                    foundGoodPlace = true;
                 }
+            }
 
-                if (isLeftDownSpotLegal && foundGoodPlace == false)
+            if (isLeftDownSpotLegal && foundGoodPlace == false)
+            {
+                if (isHaveEnemyInCrossToEat((byte)(indexX - 1), (byte)(indexY + 1), (byte)(indexX - 2), (byte)(indexY + 2)))
                 {
-                    if (isHaveEnemyInCrossToEat((byte)(indexX - 1), (byte)(indexY + 1), (byte)(indexX - 2), (byte)(indexY + 2)))
-                    {
-                        //yosi start
-                        //i_IndexesThatLegal[0] = (byte)(indexX - 2);
-                        // i_IndexesThatLegal[1] = (byte)(indexY + 2);
+                    //yosi start
+                    //i_IndexesThatLegal[0] = (byte)(indexX - 2);
+                    // i_IndexesThatLegal[1] = (byte)(indexY + 2);
 
-                        o_IndexesThatLegal.X = (byte)(indexX - 2);
-                        o_IndexesThatLegal.Y = (byte)(indexY + 2);
+                    o_IndexesThatLegal.X = (byte)(indexX - 2);
+                    o_IndexesThatLegal.Y = (byte)(indexY + 2);
 
-                        //yosi end
-                        foundGoodPlace = true;
-                    }
+                    //yosi end
+                    foundGoodPlace = true;
                 }
+            }
 
-            
+
 
             return foundGoodPlace;
         }
@@ -812,16 +823,16 @@ namespace MatrixCheckers
         public bool GameOn()
         {
             // yosi to do 
-            if(NowPlaying == k_Player1)
+            if (NowPlaying == k_Player1)
             {
                 m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDo(this, !k_Player1) != null;
             }
             else
             {
-                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDo(this, k_Player1) != null; 
+                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDo(this, k_Player1) != null;
 
             }
-            
+
             return m_GameOn;
         }
 

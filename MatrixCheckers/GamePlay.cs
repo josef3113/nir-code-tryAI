@@ -47,7 +47,8 @@ namespace MatrixCheckers
         public void StartGameToPlay()
         {
             byte indexMoves = 0; // // rember to erase one day 
-            string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd", "Ed>Fe" }; // rember to erase one day 
+            string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd",
+                    "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" }; // rember to erase one day 
             string[] gameForYosi = { "Hc>Gd", "Gd>He" };
             while (m_ActiveGame.GameOn() == true)
             {
@@ -222,6 +223,16 @@ namespace MatrixCheckers
                 char MiddleX = (char)((yaadX + makorX) / 2), MiddleY = (char)((yaadY + makorY) / 2);
                 m_UiOfGame[MiddleY, MiddleX] = emptyPlace;
 
+            }
+
+            byte indexDestX , indexDestY ;
+
+            CheckersLogic.charsToIndex(out indexDestX, yaadX, out indexDestY, yaadY);
+
+            if (m_ActiveGame.checkIfBecomeKing(indexDestX, indexDestY))
+            {
+                const char xKing = 'K', oKing = 'U';
+                m_UiOfGame[yaadY, yaadX] = indexDestY == 0 ? xKing : oKing;
             }
         }
 
