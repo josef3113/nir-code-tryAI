@@ -65,7 +65,7 @@ namespace MatrixCheckers
             */
 
             string[] gameMoveLazy = { "Bc>Cd", "Af>Be", "Cd>Af" }; // rember to erase one day 
-
+            string[] gameForYosi = { "Hc>Gd", "Gd>He" };
             while (m_ActiveGame.GameOn() == true)
             {
                 m_UiOfGame.PrintBoardGame();
@@ -96,6 +96,11 @@ namespace MatrixCheckers
 
                 if (m_ActiveGame.NowPlaying == player1)
                 {
+                    //if(indexMoves > 0)
+                    //{
+                    //    moveInString = gameForYosi[indexMoves];
+                    //    indexMoves++;
+                    //}
                     moveInString = InputChecking();
                 }
                 else

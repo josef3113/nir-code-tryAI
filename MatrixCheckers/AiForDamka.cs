@@ -8,12 +8,12 @@ namespace matricxChekers
 {
     class AiForDamka   //   jjj
     {
-       const bool m_player1 = true;
-        public static string TheBestMoveToDo(CheckersLogic i_TheGameNow , bool i_PlayerToCheck )
+       private const bool m_player1 = true;
+        public static string TheBestMoveToDo(CheckersLogic i_TheGameNow , bool i_PlayerToCheck ) // true for player 1 and false for player 2
         {
             bool foundActiveToDo = false;
             string activTheBest = null ;
-            Locat yaad ;
+           // Locat yaad ;
 
             //foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
             //{
@@ -73,9 +73,10 @@ namespace matricxChekers
             return activeToReturn.ToString();
         }
 
-        private static bool thisPlayerCanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat, bool i_PlayerToCheck = !m_player1)
+        private static bool thisPlayerCanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat, bool i_PlayerToCheck )// true for player 1 and false for player 2
         {
-            o_ActiveToEat = "NonActive";
+            //o_ActiveToEat = "NonActive";
+            o_ActiveToEat = null;
             bool playerCanToEat = false;
             List<Locat> listOfPlayerToCheck;
             Locat yaad;
@@ -103,9 +104,10 @@ namespace matricxChekers
 
         }
 
-        private static bool thisPlayerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove, bool i_PlayerToCheck = !m_player1)
+        private static bool thisPlayerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove, bool i_PlayerToCheck )// true for player 1 and false for player 2
         {
-            o_ActiveToMove = "NonActive";
+            //o_ActiveToMove = "NonActive";
+            o_ActiveToMove = null;
             bool playerCanToMove = false;
             Locat yaad;
             List<Locat> listOfPlayerToCheck;

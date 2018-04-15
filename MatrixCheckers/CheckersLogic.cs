@@ -17,6 +17,17 @@ namespace MatrixCheckers
         }
         public byte X { get; set; }
         public byte Y { get; set; }
+
+        private int Compare(Locat i_Other)
+        {
+            int result = 0;
+            if(this.Y > i_Other.Y)
+            {
+                result = 1;
+            }
+            return result;
+        }
+
     }
     //yosi end
     class CheckersLogic
@@ -26,8 +37,8 @@ namespace MatrixCheckers
         private byte m_Size;
         private bool m_GameOn;
         private const bool k_Player1 = true;
-        short playerOnePoints;
-        short playerTwoPoints; // to add when king and less when eating .
+        //short playerOnePoints;
+        //short playerTwoPoints; // to add when king and less when eating .
 
         public bool NowPlaying { get; private set; } = k_Player1; // it is changed . Look out.
         public bool IsTurnPass { get; private set; } = false; // isTurnPass
@@ -41,6 +52,17 @@ namespace MatrixCheckers
         {
             i_VellsOfPlayer.Remove(i_CurrentVessel);
             i_VellsOfPlayer.Add(i_NewVessel);
+        }
+        private void sortListOfVesselBecomingFirst(List<Locat> i_ListToSort)
+        {
+            i_ListToSort.Sort(delegate (Locat locat1, Locat locat2)
+            {
+                if (locat1.Y == locat2.Y) return 0;
+                else if (locat1.Y < locat2.Y) return -1;
+                else if (locat1.Y > locat2.Y) return 1;
+                else return locat1.Y.CompareTo(locat2.Y);
+            });
+               
         }
 
         public void PrintVeelssInList(List<Locat> i_VellsOfPlayer)
@@ -71,7 +93,7 @@ namespace MatrixCheckers
             Locat currentVeesel = new Locat();
             //yosi end
 
-            playerOnePoints = playerTwoPoints = (short)(((m_Size - 2) / 2) * (m_Size / 2));
+            //playerOnePoints = playerTwoPoints = (short)(((m_Size - 2) / 2) * (m_Size / 2));
 
             for (int i = 0; i < m_Size; i++)
             {
@@ -274,10 +296,17 @@ namespace MatrixCheckers
                 if (NowPlaying == k_Player1)
                 {
                     ChanghVeesslInList(m_VellsOfPlayer1, original, newVessel);
+                    //yosi check
+                    sortListOfVesselBecomingFirst(m_VellsOfPlayer1);
+                    // yosi end check
                 }
                 else
                 {
                     ChanghVeesslInList(m_VellsOfPlayer2, original, newVessel);
+                    // yosi check
+                    sortListOfVesselBecomingFirst(m_VellsOfPlayer2);
+                    //m_VellsOfPlayer2
+                    // yosi end check
                 }
 
 
@@ -786,7 +815,21 @@ namespace MatrixCheckers
             return NowPlaying == k_Player1 ? eCheckers.CheckerO | eCheckers.CheckerU : eCheckers.CheckerX | eCheckers.CheckerK;
         }
 
-        public bool GameOn() { return m_GameOn; }
+        public bool GameOn()
+        {
+            // yosi to do 
+            if(NowPlaying == k_Player1)
+            {
+                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDo(this, !k_Player1) != null;
+            }
+            else
+            {
+                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDo(this, k_Player1) != null; 
+
+            }
+            
+            return m_GameOn;
+        }
 
         [Flags]
         private enum eCheckers : byte
