@@ -6,7 +6,7 @@ using MatrixCheckers;
 
 namespace matricxChekers
 {
-    class AiForDamka   //   jjj
+    static class AiForDamka   //   jjj
     {
        private const bool m_player1 = true;
         public static string TheBestMoveToDo(CheckersLogic i_TheGameNow , bool i_PlayerToCheck ) // true for player 1 and false for player 2

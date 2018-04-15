@@ -30,7 +30,7 @@ namespace MatrixCheckers
 
         }
         // yosi start
-        public GamePlay(Player i_player1, Player i_player2, byte i_Size = 8 )
+        public GamePlay(Player i_player1, Player i_player2, byte i_Size = 8)
         {
             m_player1 = i_player1;
             m_player2 = i_player2;
@@ -64,70 +64,53 @@ namespace MatrixCheckers
             }
             */
 
-            string[] gameMoveLazy = { "Bc>Cd", "Af>Be", "Cd>Af" }; // rember to erase one day 
+            string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd", "Ed>Fe" }; // rember to erase one day 
             string[] gameForYosi = { "Hc>Gd", "Gd>He" };
             while (m_ActiveGame.GameOn() == true)
             {
                 m_UiOfGame.PrintBoardGame();
 
                 const bool player1 = true;
-                
+
                 Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ? m_player1.Name : m_player2.Name);
 
                 string moveInString;
 
                 // yosi start 
-
-                //bool itsVScomputer = true;
-
-                //if (indexMoves < gameMoveLazy.Length)
-                //{
-
-                //    // some legal move/eat of the computer. return .
-                //    moveInString = gameMoveLazy[indexMoves];
-                //    // the move done.
-                //    indexMoves++;
-                //}
-                //else
-                //{
-                //    // moveInString = Console.ReadLine();
-                //    moveInString = InputChecking();
-                //}
-
-                if (m_ActiveGame.NowPlaying == player1)
+                
+                if (indexMoves < gameMoveLazy.Length)
                 {
-                    //if(indexMoves > 0)
-                    //{
-                    //    moveInString = gameForYosi[indexMoves];
-                    //    indexMoves++;
-                    //}
-                    moveInString = InputChecking();
+
+                    // some legal move/eat of the computer. return .
+                    moveInString = gameMoveLazy[indexMoves];
+                    // the move done.
+                    indexMoves++;
                 }
                 else
                 {
-                    if (m_player2.Name == "computer")
-                    { 
-                        moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame, !player1);
+                    if (m_ActiveGame.NowPlaying == player1)
+                    {
+                        //if(indexMoves > 0)
+                        //{
+                        //    moveInString = gameForYosi[indexMoves];
+                        //    indexMoves++;
+                        //}
+                        moveInString = InputChecking();
                     }
                     else
                     {
-                        moveInString = InputChecking();
+                        if (m_player2.Name == "computer")
+                        {
+                            moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame, !player1);
+                        }
+                        else
+                        {
+                            moveInString = InputChecking();
+                        }
                     }
+
                 }
-
-                // yosi end
-
-                //if (Comp == false)
-                //{
-                //    moveInString = InputChecking();
-                //}
-                //else {
-
-                //    moveInString =  Comp.BestMove();
-                //}
-
-
-
+                
                 // string moveInString = Console.ReadLine(); // replace to method
 
                 if (moveInString != null)
@@ -137,26 +120,57 @@ namespace MatrixCheckers
 
                     if (m_ActiveGame.IsTurnPass)
                     {
-
-                        /*
-                        if (m_ActiveGame.IsEated == true)
-                        {
-
-
-                        }
-                        */
-                        // moveInBoard
-
                         moveInBoard(moveInString);
+                        if (m_ActiveGame.IsEated)
+                        {
+                            multiEatingByPlayer(moveInString); 
+                        }
+
                         m_ActiveGame.ChangePlayer();
 
                     }
-
-
-                    //  m_UiOfGame.PrintBoardGame();
-
+                    
                 }
 
+            }
+
+        }
+
+        private void multiEatingByPlayer(string i_MoveInString)
+        {
+            byte indexX , indexY;
+
+            CheckersLogic.charsToIndex(out indexX, i_MoveInString[3], out indexY, i_MoveInString[4]);
+
+            while (m_ActiveGame.checkingBounderis(indexX, indexY))
+            {
+
+                m_UiOfGame.PrintBoardGame();
+                Console.WriteLine("Eat Again , From GamePlay !!");
+                i_MoveInString = InputChecking();
+                if (i_MoveInString != null)
+                {
+                    byte inputIndex2X, inputIndex2Y, inputIndex1X, inputIndex1Y;
+                    CheckersLogic.charsToIndex(out inputIndex2X, i_MoveInString[3], out inputIndex2Y, i_MoveInString[4]);
+                    CheckersLogic.charsToIndex(out inputIndex1X, i_MoveInString[0], out inputIndex1Y, i_MoveInString[1]);
+
+                    if (indexX == inputIndex1X && indexY == inputIndex1Y)
+                    {
+                        Console.WriteLine("Hey im here , the same as befor is playing");
+                        m_ActiveGame.eatWithSameSoilder(inputIndex1X, inputIndex1Y, inputIndex2X, inputIndex2Y);
+                        Console.WriteLine("answer if it eated the soidler ===> {0}", m_ActiveGame.IsEated);
+
+                        if (m_ActiveGame.IsEated)
+                        {
+                            moveInBoard(i_MoveInString);
+
+                            indexX = inputIndex2X;
+                            indexY = inputIndex2Y;
+                        }
+                    }
+
+                    //    m_ActiveGame
+                }
             }
 
         }

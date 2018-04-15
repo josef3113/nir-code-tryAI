@@ -172,11 +172,7 @@ namespace MatrixCheckers
         public bool PlayingVessel(string i_MovePos) // maybe change to PlayingTurn .
         {
             // here add if  to cover all the method for right or wrong input ! .!!
-            if (i_MovePos[2] != '>')
-            {
-                return false;
-            }
-
+           
             IsEated = false;
 
             //if (IsTurnPass == true)
@@ -241,39 +237,41 @@ namespace MatrixCheckers
             }
         }
 
-        private bool eatOrMoveVessel(byte vesselOneX, byte vesselOneY, byte vesselTwoX, byte vesselTwoY)
+        private void eatOrMoveVessel(byte vesselOneX, byte vesselOneY, byte vesselTwoX, byte vesselTwoY)
         {
-            bool turnWellPlayed = false;
+           
 
             const byte oneStepMoveInCross = 1, twoStepsMoveInCross = 2;
 
             if (checkMoveInCross(oneStepMoveInCross, vesselOneX, vesselOneY, vesselTwoX, vesselTwoY))
             {
-                turnWellPlayed = moveVessel(vesselOneX, vesselOneY, vesselTwoX, vesselTwoY);
+                moveVessel(vesselOneX, vesselOneY, vesselTwoX, vesselTwoY);
             }
             else if (checkMoveInCross(twoStepsMoveInCross, vesselOneX, vesselOneY, vesselTwoX, vesselTwoY))
             {
-                turnWellPlayed = eatEnemyVessel(vesselOneX, vesselOneY, vesselTwoX, vesselTwoY);
+            eatEnemyVessel(vesselOneX, vesselOneY, vesselTwoX, vesselTwoY);
             }
             else
             {
                 Console.WriteLine("illegal move , you can only move in cross one step or eat in cross . try again.");
             }
-
-            return turnWellPlayed;
+            
         }
 
-        private bool checkIfBecomeKing(ref byte io_Vessel, byte i_LineY)
+        public bool checkIfBecomeKing(ref byte io_Vessel, byte i_LineY)
         {
             bool becomeKing = false;
-            if (i_LineY == 0 || i_LineY == (m_Size - 1))
+
+            if (i_LineY == 0 && io_Vessel == (byte)eCheckers.CheckerX)
             {
-                if (io_Vessel == (byte)eCheckers.CheckerO || io_Vessel == (byte)eCheckers.CheckerX)
-                {
-                    io_Vessel = NowPlaying == k_Player1 ? (byte)eCheckers.CheckerU : (byte)eCheckers.CheckerK;
-                    becomeKing = true;
-                }
+                becomeKing = true;
+                io_Vessel = (byte)eCheckers.CheckerK;
             }
+            else if (i_LineY == (m_Size - 1) && io_Vessel == (byte)eCheckers.CheckerO)
+            {
+                becomeKing = true;
+                io_Vessel = (byte)eCheckers.CheckerU;
+            }              
 
             return becomeKing;
         }
@@ -286,6 +284,7 @@ namespace MatrixCheckers
             {
                 m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX] = m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX];
                 m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX] = (byte)eCheckers.Non; // (byte) eCheckers.Non == 0   
+
                 checkIfBecomeKing(ref m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX], i_IndexOfVesselTwoY);
 
                 IsTurnPass = true;
@@ -318,11 +317,10 @@ namespace MatrixCheckers
             return isMoved;
         }
 
-        private bool eatEnemyVessel(byte i_IndexOfVesselOneX, byte i_IndexOfVesselOneY, byte i_IndexOfVesselTwoX, byte i_IndexOfVesselTwoY)
+        private void eatEnemyVessel(byte i_IndexOfVesselOneX, byte i_IndexOfVesselOneY, byte i_IndexOfVesselTwoX, byte i_IndexOfVesselTwoY)
         { //// te bool return is for check if all did appened and not need replay turn . if the bool not needed so to replace to void .
 
-            bool isEated = false;
-
+            
             byte middleIndexX = (byte)((i_IndexOfVesselTwoX + i_IndexOfVesselOneX) / 2);
             byte middleIndexY = (byte)((i_IndexOfVesselOneY + i_IndexOfVesselTwoY) / 2);
 
@@ -333,8 +331,7 @@ namespace MatrixCheckers
                 m_Mat[i_IndexOfVesselOneY, i_IndexOfVesselOneX] = (byte)eCheckers.Non;
 
                 checkIfBecomeKing(ref m_Mat[i_IndexOfVesselTwoY, i_IndexOfVesselTwoX], i_IndexOfVesselTwoY);
-                mulitiEatingCheckAndDo(i_IndexOfVesselTwoX, i_IndexOfVesselTwoY);
-
+               
                 IsTurnPass = true;
 
                 // yossi move vessel
@@ -357,118 +354,28 @@ namespace MatrixCheckers
 
                 // yosi end 
                 IsEated = true;
-
-                // isEated = true;
+                
             }
             else
             {
                 Console.WriteLine("Cant jump so far without Eat. - you cant eat nothing or yourself - . try again.");
             }
-
-            return isEated;
+            
         }
-
-        public void mulitiEatingCheckAndDo(byte i_VesselIndexX, byte i_VesselIndexY)
+        
+        public void eatWithSameSoilder(byte indexInput1X, byte indexInput1Y, byte indexInput2X, byte indexInput2Y)
         {
-            bool continueEating = true;
-            bool checkIfOptionToEat = checkingBounderis(i_VesselIndexX, i_VesselIndexY);
-
-            while (checkIfOptionToEat == true) // this while is what i need and i need it for the out method to keep cycling..!!
-            { /// -- delete1
-                if (NowPlaying == k_Player1)
-                {
-                    Console.WriteLine("Hey im player1 and i can eat double.!!11");
-                }
-                else // p2
-                {
-                    Console.WriteLine("Hey im player2 and i can eat double.!!22");
-                }
-                /// -- delete2
-                ///                
-
-                string inputMove = allInputIsOk();
-                if (inputMove != null)
-                {
-                    byte indexInput1X, indexInput1Y, indexInput2X, indexInput2Y;
-                    charsToIndex(out indexInput1X, inputMove[0], out indexInput1Y, inputMove[1]);
-                    charsToIndex(out indexInput2X, inputMove[3], out indexInput2Y, inputMove[4]);
-                    //// ++ == from here its the main of the multi eating
-                    if (indexInput1X == i_VesselIndexX && indexInput1Y == i_VesselIndexY)
-                    {
-                        continueEating = eatWithSameSoilder(indexInput1X, indexInput1Y, indexInput2X, indexInput2Y);
-
-                        if (continueEating == true)
-                        {
-                            i_VesselIndexX = indexInput2X;
-                            i_VesselIndexY = indexInput2Y;
-                        }
-
-                        checkIfOptionToEat = checkingBounderis(i_VesselIndexX, i_VesselIndexY);
-                        //// ++ == untill here !!
-                        Console.WriteLine("im here the input is good the indexes of target was {0}{1} and the checkToEatAgain is -> {2}", (char)(i_VesselIndexY + 'A'), (char)(i_VesselIndexX + 'a'), checkIfOptionToEat);
-                    }
-                }
-            }
-        }
-
-        private string allInputIsOk()
-        {
-            string rightInput = null;
-            PrintBoard();
-            Console.WriteLine("Eat Again");
-            string inputGameMove = Console.ReadLine();
-            char capitalEnd = (char)((m_Size - 1) + 'A'), littleEnd = (char)((m_Size - 1) + 'a');
-            if (inputGameMove.Length >= 5)
-            {
-                if (checkNotPassTheLimitChars(inputGameMove[0], inputGameMove[1], inputGameMove[3], inputGameMove[4]) && inputGameMove[2] == '>')
-                {
-                    rightInput = inputGameMove;
-                }
-            }
-            else if (inputGameMove.Length == 0)
-            {
-                Console.WriteLine("wow there is nothing here.");
-            }
-            else if (char.ToUpper(inputGameMove[0]) == 'Q')
-            {
-                Console.WriteLine("You are sure you want to end the game ? if yes enter Q or q again.");
-            }
-
-            return rightInput;
-        }
-
-        private bool checkNotPassTheLimitChars(char i_CapitalLetterA, char i_LittleLetterA, char i_CapitalLetterB, char i_LittleLetterB)
-        {
-            char capitalEnd = (char)((m_Size - 1) + 'A'), littleEnd = (char)((m_Size - 1) + 'a');
-            bool capitalLetters = (i_CapitalLetterA >= 'A' && i_CapitalLetterA <= capitalEnd) && (i_CapitalLetterB >= 'A' && i_CapitalLetterB <= capitalEnd);
-            bool littleLetters = (i_LittleLetterA >= 'A' && i_LittleLetterA <= littleEnd) && (i_LittleLetterB >= 'A' && i_LittleLetterB <= littleEnd);
-            return capitalLetters && littleLetters;
-        }
-
-        private bool eatWithSameSoilder(byte indexInput1X, byte indexInput1Y, byte indexInput2X, byte indexInput2Y)
-        {
-            bool isEated = false;
-
+                IsEated = false;
+          
             if (checkMoveInCross(2, indexInput1X, indexInput1Y, indexInput2X, indexInput2Y))
             {
-                byte middleIndexX = (byte)((indexInput1X + indexInput2X) / 2); // vesselMovementLineX
-                byte middleIndexY = (byte)((indexInput1Y + indexInput2Y) / 2); // vesselMovementLineY
 
-                if (isHaveEnemyInCrossToEat(middleIndexX, middleIndexY, indexInput2X, indexInput2Y))
-                {
-                    m_Mat[indexInput2Y, indexInput2X] = m_Mat[indexInput1Y, indexInput1X];
-                    m_Mat[middleIndexY, middleIndexX] = (byte)eCheckers.Non; // eCheckers.Non = 0
-                    m_Mat[indexInput1Y, indexInput1X] = (byte)eCheckers.Non;
+                Console.WriteLine("isin cross of 2");
 
-                    checkIfBecomeKing(ref m_Mat[indexInput2Y, indexInput2X], indexInput2Y);
-
-                    IsEated = true;
-
-                    // isEated = true;
-                }
+                eatEnemyVessel(indexInput1X, indexInput1Y, indexInput2X, indexInput2Y);
+                
             }
 
-            return isEated;
         }
 
         private bool checkMoveInCross(byte moveDist, byte indexX1, byte indexY1, byte indexX2, byte indexY2)
@@ -477,7 +384,7 @@ namespace MatrixCheckers
             return stepsLineX == moveDist && stepsLineY == moveDist;
         }
 
-        private bool checkingBounderis(byte i_VesselIndexX, byte i_VesselIndexY) // check that the indexes still in limit.
+        public bool checkingBounderis(byte i_VesselIndexX, byte i_VesselIndexY) // check that the indexes still in limit.
         {////////////////////////////// Right ///////////////////////////// Down ////////////////////////////////// Left /////////////////////// Up //////////
          //   bool  isInLimit = (i_VesselIndexX + 2 <= m_Size - 1) && (i_VesselIndexY + 2 <= m_Size - 1) && (i_VesselIndexX - 2 >= 0) && (i_VesselIndexY - 2 >= 0);
 
@@ -792,7 +699,7 @@ namespace MatrixCheckers
             return (freeSpot == eCheckers.Non && ((checker & soildersTeam) != checker && checker != eCheckers.Non));
         }
 
-        private void charsToIndex(out byte o_VesselIndexX, char i_CapitalLetterX, out byte o_VesselIndexY, char i_SmallLetterY)
+        public static void charsToIndex(out byte o_VesselIndexX, char i_CapitalLetterX, out byte o_VesselIndexY, char i_SmallLetterY)
         {
             o_VesselIndexX = (byte)(i_CapitalLetterX - 'A');
             o_VesselIndexY = (byte)(i_SmallLetterY - 'a');
