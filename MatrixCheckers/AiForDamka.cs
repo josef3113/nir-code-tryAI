@@ -9,6 +9,8 @@ namespace matricxChekers
     static class AiForDamka   //   jjj
     {
        private const bool m_player1 = true;
+
+        // need to built best move for player one 
         public static string TheBestMoveToDo(CheckersLogic i_TheGameNow , bool i_PlayerToCheck ) // true for player 1 and false for player 2
         {
             bool foundActiveToDo = false;
@@ -117,6 +119,28 @@ namespace matricxChekers
             return playerCanToEat;
 
         }
+
+
+        // need to be bool 
+        public static string Player1CanToMove(CheckersLogic i_TheGameNow /*, out string o_ActiveToMove*/)
+        {
+           string o_ActiveToMove = null; // o_ActiveToMove
+            bool playerCanToMove = false;
+            Locat yaad;
+            foreach (var makor in i_TheGameNow.m_VellsOfPlayer1)
+            {
+                if (i_TheGameNow.Player1CanToMove(makor, out yaad))
+                {
+                    o_ActiveToMove = makeStringOfActive(makor, yaad);
+                    playerCanToMove = true;
+                    break;
+                }
+            }
+            return o_ActiveToMove;
+           // return playerCanToMove;
+
+        }
+
 
         private static bool thisPlayerCanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove, bool i_PlayerToCheck )// true for player 1 and false for player 2
         {

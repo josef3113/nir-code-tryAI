@@ -731,6 +731,112 @@ namespace MatrixCheckers
             return foundGoodPlace;
             //yosi end
         }
+        // yosi start
+        // public bool CanToMove(byte[] i_IndexesToPlay, byte[] i_IndexesThatLegal)
+        public bool Player1CanToMove(Locat i_IndexesToPlay, out Locat o_IndexesThatLegal)
+        // yosi end
+        {
+            byte start = 0, end = (byte)(m_Size - 1);
+
+            bool foundGoodPlace = false;
+            //yosi start
+            //byte indexX = i_IndexesToPlay[0], indexY = i_IndexesToPlay[1];
+            o_IndexesThatLegal = new Locat();
+            byte indexX = i_IndexesToPlay.X, indexY = i_IndexesToPlay.Y;
+            //yosi end 
+
+            bool isRightDownSpotLegal = (indexX + 1 <= end) && (indexY + 1 <= end);
+            bool isLeftDownSpotLegal = (indexX - 1 >= start) && (indexY + 1 <= end);
+           
+            eCheckers kings = eCheckers.CheckerK | eCheckers.CheckerU, currentSoilder = (eCheckers)m_Mat[indexY, indexX];
+
+            if (isRightDownSpotLegal)
+            {
+                eCheckers spotToCheck = (eCheckers)m_Mat[indexY + 1, indexX + 1];
+                if (spotToCheck == eCheckers.Non)
+                {
+                    // yosi start
+                    //o_IndexesThatLegal[0] = (byte)(indexX + 1);
+                    //o_IndexesThatLegal[1] = (byte)(indexY + 1);
+
+                    o_IndexesThatLegal.X = (byte)(indexX + 1);
+                    o_IndexesThatLegal.Y = (byte)(indexY + 1);
+
+                    // yosi end 
+                    foundGoodPlace = true;
+                }
+            }
+
+            if (isLeftDownSpotLegal && foundGoodPlace == false)
+            {
+                eCheckers spotToCheck = (eCheckers)m_Mat[indexY + 1, indexX - 1];
+                if (spotToCheck == eCheckers.Non)
+                {
+                    // yosi start 
+                    //o_IndexesThatLegal[0] = (byte)(indexX - 1);
+                    //o_IndexesThatLegal[1] = (byte)(indexY + 1);
+
+                    o_IndexesThatLegal.X = (byte)(indexX - 1);
+                    o_IndexesThatLegal.Y = (byte)(indexY + 1);
+
+                    // yosi end 
+                    foundGoodPlace = true;
+                }
+            }
+
+
+
+            if (foundGoodPlace == false && ((currentSoilder & kings) == currentSoilder))
+            {
+                bool isRightUpSpotLegal = (indexX + 1 <= end) && (indexY - 1 >= start);
+                bool isLeftUpSpotLegal = (indexX - 1 >= start) && (indexY - 1 >= start);
+
+
+
+                // here
+                if (isRightUpSpotLegal)
+                {
+                    eCheckers spotToCheck = (eCheckers)m_Mat[indexY - 1, indexX + 1];
+                    if (spotToCheck == eCheckers.Non)
+                    {
+                        // yosi start
+                        //o_IndexesThatLegal[0] = (byte)(indexX + 1);
+                        //o_IndexesThatLegal[1] = (byte)(indexY - 1);
+
+                        o_IndexesThatLegal.X = (byte)(indexX + 1);
+                        o_IndexesThatLegal.Y = (byte)(indexY - 1);
+
+                        //yosi end
+                        foundGoodPlace = true;
+                    }
+                }
+
+                if (isLeftUpSpotLegal && foundGoodPlace == false)
+                {
+                    eCheckers spotToCheck = (eCheckers)m_Mat[indexY - 1, indexX - 1];
+                    if (spotToCheck == eCheckers.Non)
+                    {
+                        //yosi start
+                        //o_IndexesThatLegal[0] = (byte)(indexX - 1);
+                        //o_IndexesThatLegal[1] = (byte)(indexY - 1);
+
+                        o_IndexesThatLegal.X = (byte)(indexX - 1);
+                        o_IndexesThatLegal.Y = (byte)(indexY - 1);
+
+                        //yosi end 
+                        foundGoodPlace = true;
+                    }
+                }
+
+                // until here
+
+                
+            }
+            //yosi start
+            //return false;
+            return foundGoodPlace;
+            //yosi end
+        }
 
 
         private bool CanToMove(byte indexX, byte indexY)
@@ -831,7 +937,8 @@ namespace MatrixCheckers
             }
             else
             {
-                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDo(this, k_Player1) != null;
+                //need to bulit this !!!  AiForDamka.TheBestMoveToDoforPlayerOne
+                m_GameOn = matricxChekers.AiForDamka.Player1CanToMove(this) != null;
 
             }
 
