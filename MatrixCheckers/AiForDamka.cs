@@ -159,7 +159,7 @@ namespace matricxChekers
             }
             foreach (var makor in listOfPlayerToCheck)
             {
-                if (i_TheGameNow.CanToMove(makor, out yaad))
+                if (i_TheGameNow.CanToMoveTry(makor, out yaad))
                 {
                     o_ActiveToMove = makeStringOfActive(makor, yaad);
                     playerCanToMove = true;
