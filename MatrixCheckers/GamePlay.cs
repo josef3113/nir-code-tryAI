@@ -16,6 +16,7 @@ namespace MatrixCheckers
         CheckersLogic m_ActiveGame;
         BordToGame m_UiOfGame;
         byte m_Size;
+        bool m_WantToPlay = true;
 
         public GamePlay(byte i_Size = 8)
         {
@@ -50,15 +51,20 @@ namespace MatrixCheckers
             string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd",
                     "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" }; // rember to erase one day 
             string[] gameForYosi = { "Hc>Gd", "Gd>He" };
-            while (m_ActiveGame.GameOn() == true)
+            string moveInString = null;
+            while (m_ActiveGame.GameOn() == true && m_WantToPlay == true)
             {
                 m_UiOfGame.PrintBoardGame();
 
                 
+                if(moveInString != null)
+                {
+                    Console.WriteLine("{2} move was {1}{0}", Environment.NewLine,moveInString, m_ActiveGame.NowPlaying == player1  ? m_player2.Name+" (x)": m_player1.Name+" (o)");
 
+                }
                 Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ? m_player1.Name : m_player2.Name);
 
-                string moveInString;
+                
 
                 // yosi start 
 
@@ -74,11 +80,6 @@ namespace MatrixCheckers
                 {
                     if (m_ActiveGame.NowPlaying == player1)
                     {
-                        //if(indexMoves > 0)
-                        //{
-                        //    moveInString = gameForYosi[indexMoves];
-                        //    indexMoves++;
-                        //}
                         moveInString = InputChecking();
                     }
                     else
@@ -140,8 +141,54 @@ namespace MatrixCheckers
 
             }
 
+            if(m_ActiveGame.GameOn() == false)
+            {
+                gameOver();
+            }
         }
 
+        private void gameOver()
+        {
+            m_player1.Points += sumOfPointsInList(m_ActiveGame.m_VellsOfPlayer1);
+            m_player2.Points += sumOfPointsInList(m_ActiveGame.m_VellsOfPlayer2);
+
+            byte choicToAnoterGame;
+            Console.WriteLine("if you want play again insert 1 other if you want to stop play");
+            while (byte.TryParse(Console.ReadLine(), out choicToAnoterGame) == false);
+
+            if(choicToAnoterGame == (byte) 1)
+            {
+                m_ActiveGame.resetGame();
+                m_UiOfGame.ResetBoardOfGame();
+            }
+            else
+            {
+                m_WantToPlay = false;
+            }
+
+
+        }
+
+        private byte sumOfPointsInList(List<Locat> i_listToSum)
+        {
+            byte sumOfPoints = (byte)0;
+            foreach (var item in i_listToSum)
+            {
+                // char yy =(char) (stam.X + (byte)'A');
+                char checkCurrntLocat = m_UiOfGame[ (char)(item.Y + (byte)'a'), (char)(item.X + (byte)'A')];
+                if ( checkCurrntLocat == 'U' || checkCurrntLocat == 'K')
+                {
+                    sumOfPoints += (byte)4;
+                }
+                else
+                {
+                    sumOfPoints += (byte)1;
+                }
+
+            }
+
+            return sumOfPoints;
+        }
         private void multiEatingByPlayer(string i_MoveInString)
         {
             byte indexX , indexY;
@@ -239,9 +286,14 @@ namespace MatrixCheckers
             }
             else if (char.ToUpper(inputGameMove[0]) == 'Q')
             {
-                Console.WriteLine("You are sure you want to end the game ? if yes enter Q or q again.");
+                // yosi todo 
+                // Console.WriteLine("You are sure you want to end the game ? if yes enter Q or q again.");
+                gameOver();
             }
-
+            if(m_WantToPlay == false)
+            {
+                rightInput = null;
+            }
             return rightInput;
         }
 

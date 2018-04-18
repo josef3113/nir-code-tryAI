@@ -82,7 +82,7 @@ namespace MatrixCheckers
             resetGame();
         }
 
-        private void resetGame()
+        public void resetGame()
         {
 
             m_GameOn = true;
@@ -91,6 +91,8 @@ namespace MatrixCheckers
 
             //yosi start
             Locat currentVeesel = new Locat();
+            m_VellsOfPlayer1.Clear();
+            m_VellsOfPlayer2.Clear();
             //yosi end
 
             //playerOnePoints = playerTwoPoints = (short)(((m_Size - 2) / 2) * (m_Size / 2));
@@ -751,7 +753,7 @@ namespace MatrixCheckers
 
             eCheckers kings = eCheckers.CheckerK | eCheckers.CheckerU, currentSoilder = (eCheckers)m_Mat[indexY, indexX];
 
-            if (CanToMoveRightUpInY(i_IndexesToPlay, out o_IndexesThatLegal))
+            if ( CanToMoveRightUpInY(i_IndexesToPlay, out o_IndexesThatLegal))
             {
                 foundGoodPlace = true;
             }

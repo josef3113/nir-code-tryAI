@@ -23,7 +23,12 @@ namespace MatrixCheckers
         }
 
         // be private becouse users dont need to know about this method
-
+        public void ResetBoardOfGame()
+        {
+            // chang this
+            m_BoardOfGame = CreatBoard();
+        }
+          
         private char[][] CreatBoard()
 
         {
