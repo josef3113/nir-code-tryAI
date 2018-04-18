@@ -97,8 +97,11 @@ insert 3 for game in size 10"
             }
 
             byte chosOnePlayerOrTwo;
-            Console.WriteLine("insert 1 if you want to play vs computer any ather if you want two player");
-            chosOnePlayerOrTwo = byte.Parse(Console.ReadLine());
+            Console.WriteLine("insert 1  if you want play VS computer other number smaller 255 if you want to play two players");
+            while (byte.TryParse(Console.ReadLine(), out chosOnePlayerOrTwo) == false)
+            {
+                Console.WriteLine("is wrong input, try again");
+            }
             if (chosOnePlayerOrTwo != (byte)1)
             {
                 Console.WriteLine("insert secound name = not contains space and in lenght of 20 letter but not computer");

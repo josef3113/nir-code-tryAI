@@ -154,8 +154,11 @@ namespace MatrixCheckers
             m_player2.Points += sumOfPointsInList(m_ActiveGame.m_VellsOfPlayer2);
 
             byte choicToAnoterGame;
-            Console.WriteLine("if you want play again insert 1 other if you want to stop play");
-            while (byte.TryParse(Console.ReadLine(), out choicToAnoterGame) == false);
+            Console.WriteLine("if you want play again insert 1 other number smaller 255 if you want to stop play");
+            while (byte.TryParse(Console.ReadLine(), out choicToAnoterGame) == false)
+            {
+                Console.WriteLine("is wrong input, try again");
+            }
 
             if(choicToAnoterGame == (byte) 1)
             {
