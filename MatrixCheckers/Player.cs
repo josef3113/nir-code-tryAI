@@ -7,7 +7,7 @@ namespace MatrixCheckers
 {
     class Player
     {
-        private string m_Name = "computer";
+        private string m_Name = null;
         private short m_Points = 0;
 
         public string Name

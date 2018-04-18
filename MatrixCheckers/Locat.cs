@@ -15,15 +15,5 @@ namespace MatrixCheckers
         public byte X { get; set; }
         public byte Y { get; set; }
 
-        //private int Compare(Locat i_Other)
-        //{
-        //    int result = 0;
-        //    if (this.Y > i_Other.Y)
-        //    {
-        //        result = 1;
-        //    }
-        //    return result;
-        //}
-
     }
 }

@@ -48,8 +48,8 @@ namespace MatrixCheckers
         public void StartGameToPlay()
         {
             byte indexMoves = 0; // // rember to erase one day 
-            string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd",
-                    "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" }; // rember to erase one day 
+            string[] gameMoveLazy = {/* "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd",
+                    "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" */}; // rember to erase one day 
             string[] gameForYosi = { "Hc>Gd", "Gd>He" };
             string moveInString = null;
 
@@ -85,7 +85,7 @@ namespace MatrixCheckers
                     }
                     else
                     {
-                        if (m_player2.Name == "computer")
+                        if (m_player2.Name == null)
                         {
                             moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame, !player1);
                         }
