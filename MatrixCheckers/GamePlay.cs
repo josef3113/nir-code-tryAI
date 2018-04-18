@@ -87,7 +87,7 @@ namespace MatrixCheckers
                     {
                         if (m_player2.Name == null)
                         {
-                            moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame, !player1);
+                            moveInString = matricxChekers.AiForDamka.TheBestMoveToDoForPlayer2(m_ActiveGame);
                         }
                         else
                         {
@@ -226,19 +226,19 @@ namespace MatrixCheckers
 
                 if (m_ActiveGame.NowPlaying == player1)
                 {
-                    // i_MoveInString = InputChecking();
-                    i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
+                     i_MoveInString = InputChecking();
+                   // i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
                 }
                 else
                 {
-                    if (m_player2.Name == "computer")
+                    if (m_player2.Name == null)
                     {
                         i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
                     }
                     else
                     {
-                        //i_MoveInString = InputChecking();
-                        i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
+                        i_MoveInString = InputChecking();
+                       // i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
                     }
 
                 }
