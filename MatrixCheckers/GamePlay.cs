@@ -52,6 +52,7 @@ namespace MatrixCheckers
                     "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" }; // rember to erase one day 
             string[] gameForYosi = { "Hc>Gd", "Gd>He" };
             string moveInString = null;
+
             while (m_ActiveGame.GameOn() == true && m_WantToPlay == true)
             {
                 m_UiOfGame.PrintBoardGame();
@@ -289,11 +290,11 @@ namespace MatrixCheckers
                 // yosi todo 
                 // Console.WriteLine("You are sure you want to end the game ? if yes enter Q or q again.");
                 gameOver();
-            }
-            if(m_WantToPlay == false)
-            {
                 rightInput = null;
             }
+            
+               
+            
             return rightInput;
         }
 
