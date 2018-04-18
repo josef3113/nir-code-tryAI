@@ -1103,13 +1103,22 @@ namespace MatrixCheckers
             // yosi to do 
             if (NowPlaying == k_Player1)
             {
-                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDoForPlayer2(this) != null;
+                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDoForPlayer1(this) != null;
+                if(m_GameOn == false)
+                {
+                    Console.WriteLine("player 1 loser");
+                }
+               // m_GameOn = true;
             }
             else
             {
                 //need to bulit this !!!  AiForDamka.TheBestMoveToDoforPlayerOne
-                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDoForPlayer1(this) != null;
-
+               
+                m_GameOn = matricxChekers.AiForDamka.TheBestMoveToDoForPlayer2(this) != null;
+                if (m_GameOn == false)
+                {
+                    Console.WriteLine("player 2 loser");
+                }
             }
 
             return m_GameOn;

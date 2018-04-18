@@ -50,7 +50,7 @@ namespace MatrixCheckers
             byte indexMoves = 0; // // rember to erase one day 
             string[] gameMoveLazy = {/* "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd",
                     "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" */}; // rember to erase one day 
-            string[] gameForYosi = { "Hc>Gd", "Gd>He" };
+           
             string moveInString = null;
 
             while (m_ActiveGame.GameOn() == true && m_WantToPlay == true)
@@ -81,6 +81,8 @@ namespace MatrixCheckers
                 {
                     if (m_ActiveGame.NowPlaying == player1)
                     {
+                        // replace that
+                       // moveInString = matricxChekers.AiForDamka.TheBestMoveToDoForPlayer1(m_ActiveGame);
                         moveInString = InputChecking();
                     }
                     else
@@ -91,36 +93,14 @@ namespace MatrixCheckers
                         }
                         else
                         {
-                            moveInString = InputChecking();
+                            //replace that
+                           // moveInString = matricxChekers.AiForDamka.TheBestMoveToDoForPlayer2(m_ActiveGame);
+                             moveInString = InputChecking();
                         }
                     }
                 }
 
-
-                // stert computer vs computer
-                //if (m_ActiveGame.NowPlaying == player1)
-                //{
-                //    //if(indexMoves > 0)
-                //    //{
-                //    //    moveInString = gameForYosi[indexMoves];
-                //    //    indexMoves++;
-                //    //}
-                //    moveInString = InputChecking();
-                //   //moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame, player1);
-                //}
-                //else
-                //{
-
-                //        moveInString = matricxChekers.AiForDamka.TheBestMoveToDo(m_ActiveGame, !player1);
-
-                //}
-
-                // }
-
-                // end computer vs computer
-
-                // string moveInString = Console.ReadLine(); // replace to method
-
+                
                 if (moveInString != null)
                 {
 
@@ -134,6 +114,7 @@ namespace MatrixCheckers
                             multiEatingByPlayer(moveInString); 
                         }
 
+                        
                         m_ActiveGame.ChangePlayer();
 
                     }
@@ -205,27 +186,10 @@ namespace MatrixCheckers
 
                 m_UiOfGame.PrintBoardGame();
                 Console.WriteLine("Eat Again , From GamePlay !!");
-                //if(m_ActiveGame.NowPlaying == player1)
-                //{
-                //    i_MoveInString = InputChecking();
-
-                //}
-                //else
-                //{
-                //    if (m_player2.Name == "computer")
-                //    {
-                //        i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame,i_MoveInString);
-                //    }
-                //    else
-                //    {
-                //        i_MoveInString = InputChecking();
-                //    }
-
-                //}
-                //testing computer vs computer
-
+                
                 if (m_ActiveGame.NowPlaying == player1)
                 {
+                    // replace that
                      i_MoveInString = InputChecking();
                    // i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
                 }
@@ -237,8 +201,9 @@ namespace MatrixCheckers
                     }
                     else
                     {
+                        // replace that
                         i_MoveInString = InputChecking();
-                       // i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
+                      //  i_MoveInString = matricxChekers.AiForDamka.TheMoveToDoForMultiEating(m_ActiveGame, i_MoveInString);
                     }
 
                 }
@@ -267,6 +232,8 @@ namespace MatrixCheckers
                     //    m_ActiveGame
                 }
             }
+            // check it
+            m_UiOfGame.PrintBoardGame();
 
         }
 
