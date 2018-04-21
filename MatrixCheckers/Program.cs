@@ -47,10 +47,12 @@ namespace MatrixCheckers
 
 
 
-            Player p1 = new Player();
-            Player p2 = new Player();
+            Player player1 ;
+            Player player2 ;
             Console.WriteLine("insert your name =not contains space and in lenght of 20 letter but not computer" );
-            p1.Name = Console.ReadLine();
+            string nameOfPlayer1= Console.ReadLine();
+
+            player1 = new Player(nameOfPlayer1);
 
             
 
@@ -105,14 +107,20 @@ insert 3 for game in size 10"
             if (chosOnePlayerOrTwo != (byte)1)
             {
                 Console.WriteLine("insert secound name = not contains space and in lenght of 20 letter but not computer");
-                p2.Name = Console.ReadLine();
+                string nameOfPlayer2 = Console.ReadLine();
+                player2 =new Player (nameOfPlayer2);
             }
+            else
+            {
+                player2 = new Player();
+            }
+
 
             // p2.Name = Console.ReadLine();
 
             // here add switch case whit enum about size board and player 2
 
-            GamePlay game = new GamePlay(p1, p2, sizeOfGame);
+            GamePlay game = new GamePlay(player1, player2, sizeOfGame);
             game.StartGameToPlay();
 
 

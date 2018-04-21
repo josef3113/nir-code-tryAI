@@ -69,6 +69,9 @@ namespace MatrixCheckers
             NowPlaying = k_Player1;
 
             //yosi start
+            
+
+
             Locat currentVeesel = new Locat();
             m_VellsOfPlayer1.Clear();
             m_VellsOfPlayer2.Clear();

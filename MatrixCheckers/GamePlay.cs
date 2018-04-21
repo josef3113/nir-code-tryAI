@@ -105,21 +105,22 @@ namespace MatrixCheckers
                 {
 
                     m_ActiveGame.PlayingVessel(moveInString);
-                    moveInBoard(moveInString);
+                    // ask nir what is ISTurnPass
+                   // moveInBoard(moveInString);
 
-                    if (m_ActiveGame.IsTurnPass)
+                    if (m_ActiveGame.IsTurnPass)   // problem when reset game!
                     {
-                        //moveInBoard(moveInString);
+                        moveInBoard(moveInString);
                         if (m_ActiveGame.IsEated)
                         {
                             multiEatingByPlayer(moveInString); 
                         }
 
                         
-                       // m_ActiveGame.ChangePlayer();
+                        m_ActiveGame.ChangePlayer();
 
                     }
-                    m_ActiveGame.ChangePlayer();
+                   // m_ActiveGame.ChangePlayer();
 
                 }
 
@@ -249,7 +250,11 @@ namespace MatrixCheckers
                 }
             }
             // check it
-            m_UiOfGame.PrintBoardGame();
+            if (m_ActiveGame.GameOn() == false)
+            {
+                m_UiOfGame.PrintBoardGame();
+            }
+           
 
         }
 
