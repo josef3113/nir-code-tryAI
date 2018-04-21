@@ -105,20 +105,22 @@ namespace MatrixCheckers
                 {
 
                     m_ActiveGame.PlayingVessel(moveInString);
+                    moveInBoard(moveInString);
 
                     if (m_ActiveGame.IsTurnPass)
                     {
-                        moveInBoard(moveInString);
+                        //moveInBoard(moveInString);
                         if (m_ActiveGame.IsEated)
                         {
                             multiEatingByPlayer(moveInString); 
                         }
 
                         
-                        m_ActiveGame.ChangePlayer();
+                       // m_ActiveGame.ChangePlayer();
 
                     }
-                    
+                    m_ActiveGame.ChangePlayer();
+
                 }
 
             }
@@ -129,8 +131,20 @@ namespace MatrixCheckers
             }
         }
 
-        private void gameOver()
+        private void gameOver(byte i_ResonOfExit = (byte) 0 )
         {
+            if (i_ResonOfExit == (byte)1)
+            {
+                if (m_ActiveGame.NowPlaying == player1)
+                {
+                    Console.WriteLine("Player 1 Retired so he loser");
+                }
+                else
+                {
+                    Console.WriteLine("Player 2 Retired so he loser");
+
+                }
+            }
             m_player1.Points += sumOfPointsInList(m_ActiveGame.m_VellsOfPlayer1);
             m_player2.Points += sumOfPointsInList(m_ActiveGame.m_VellsOfPlayer2);
 
@@ -145,6 +159,8 @@ namespace MatrixCheckers
             {
                 m_ActiveGame.resetGame();
                 m_UiOfGame.ResetBoardOfGame();
+
+               
             }
             else
             {
@@ -259,7 +275,7 @@ namespace MatrixCheckers
             {
                 // yosi todo 
                 // Console.WriteLine("You are sure you want to end the game ? if yes enter Q or q again.");
-                gameOver();
+                gameOver(1);
                 rightInput = null;
             }
             
