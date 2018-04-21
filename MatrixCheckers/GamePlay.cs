@@ -111,7 +111,7 @@ namespace MatrixCheckers
                     if (m_ActiveGame.IsTurnPass)   // problem when reset game!
                     {
                         moveInBoard(moveInString);
-                        if (m_ActiveGame.IsEated)
+                        if (m_ActiveGame.IsEated) 
                         {
                             multiEatingByPlayer(moveInString); 
                         }
