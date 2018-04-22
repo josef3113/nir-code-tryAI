@@ -1,53 +1,50 @@
 ﻿//14/04/2018 15:00
-using System;
-using System.Collections.Generic;
 using System.Text;
 using MatrixCheckers;
 
 namespace matricxChekers
 {
-    static class AiForDamka   //   jjj
-    {
-       private const bool m_player1 = true;
-
-        // need to built best move for player one 
-        public static string TheBestMoveToDoForPlayer2(CheckersLogic i_TheGameNow ) // true for player 1 and false for player 2
+    static class AiForDamka 
+    {      
+        public static string TheBestMoveToDoForPlayer2(CheckersLogic i_TheGameNow )
         {
             bool foundActiveToDo = false;
-            string activTheBest = null ;
+            string activeTheBestMove = null ;
            
-            foundActiveToDo = Player2CanToEat(i_TheGameNow, out activTheBest );
+            foundActiveToDo = Player2CanToEat(i_TheGameNow, out activeTheBestMove );
             
             if (! foundActiveToDo)
             {
 
-                foundActiveToDo = Player2CanToMove(i_TheGameNow, out activTheBest );
+                foundActiveToDo = Player2CanToMove(i_TheGameNow, out activeTheBestMove );
                 
             }
-            return activTheBest;
+
+            return activeTheBestMove;
         }
 
-        public static string TheBestMoveToDoForPlayer1(CheckersLogic i_TheGameNow) // true for player 1 and false for player 2
+        public static string TheBestMoveToDoForPlayer1(CheckersLogic i_TheGameNow)
         {
             bool foundActiveToDo = false;
-            string activTheBest = null;
+            string o_ActiveTheBestMove = null;
 
-            foundActiveToDo = Player1CanToEat(i_TheGameNow, out activTheBest);
+            foundActiveToDo = Player1CanToEat(i_TheGameNow, out o_ActiveTheBestMove);
 
             if (!foundActiveToDo)
             {
 
-                foundActiveToDo = Player1CanToMove(i_TheGameNow, out activTheBest);
+                foundActiveToDo = Player1CanToMove(i_TheGameNow, out o_ActiveTheBestMove);
 
             }
-            return activTheBest;
+
+            return o_ActiveTheBestMove;
         }
 
         public static string TheMoveToDoForMultiEating(CheckersLogic i_TheGameNow, string i_LastMove)
         {
             string activeToContinueEat = null;
             Locat forChech = new Locat((byte)(i_LastMove[3]-'A'), (byte)(i_LastMove[4]-'a'));
-            Locat yaad;
+            Locat yaad = new Locat();
             i_TheGameNow.CanToMultiEat(forChech, out yaad);
             activeToContinueEat = makeStringOfActive(forChech, yaad);
 
@@ -56,26 +53,25 @@ namespace matricxChekers
         }
 
 
-        private static string makeStringOfActive(Locat i_makor, Locat i_yaad)
+        private static string makeStringOfActive(Locat i_Source, Locat i_Destination)
         {
             StringBuilder activeToReturn = new StringBuilder("Aa>Aa");
-            activeToReturn[0] = (char)(i_makor.X + (byte)'A');
-            activeToReturn[1] = (char)(i_makor.Y + (byte)'a');
+            activeToReturn[0] = (char)(i_Source.X + (byte)'A');
+            activeToReturn[1] = (char)(i_Source.Y + (byte)'a');
             activeToReturn[2] = '>';
-            activeToReturn[3] = (char)(i_yaad.X + (byte)'A');
-            activeToReturn[4] = (char)(i_yaad.Y + (byte)'a');
+            activeToReturn[3] = (char)(i_Destination.X + (byte)'A');
+            activeToReturn[4] = (char)(i_Destination.Y + (byte)'a');
 
             return activeToReturn.ToString();
         }
 
         private static bool Player2CanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat )
         {
-            //o_ActiveToEat = "NonActive";
+            
             o_ActiveToEat = null;
             bool playerCanToEat = false;
-            Locat yaad;
+            Locat yaad = new Locat();
 
-            
             foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
             {
                 if (i_TheGameNow.player2CanToEat(makor, out yaad))
@@ -93,10 +89,10 @@ namespace matricxChekers
 
         private static bool Player1CanToEat(CheckersLogic i_TheGameNow, out string o_ActiveToEat)
         {
-            //o_ActiveToEat = "NonActive";
+            
             o_ActiveToEat = null;
             bool playerCanToEat = false;
-            Locat yaad;
+            Locat yaad = new Locat();
 
 
             foreach (var makor in i_TheGameNow.m_VellsOfPlayer1)
@@ -117,10 +113,11 @@ namespace matricxChekers
 
         private static bool Player2CanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove)
         {
-            //o_ActiveToMove = "NonActive";
+            
             o_ActiveToMove = null;
             bool playerCanToMove = false;
-            Locat yaad;
+            Locat yaad = new Locat();
+
             foreach (var makor in i_TheGameNow.m_VellsOfPlayer2)
             {
                 if (i_TheGameNow.Player2CanToMove(makor, out yaad))
@@ -137,10 +134,10 @@ namespace matricxChekers
 
         private static bool Player1CanToMove(CheckersLogic i_TheGameNow, out string o_ActiveToMove)
         {
-            //o_ActiveToMove = "NonActive";
+           
             o_ActiveToMove = null;
             bool playerCanToMove = false;
-            Locat yaad;
+            Locat yaad = new Locat();
             foreach (var makor in i_TheGameNow.m_VellsOfPlayer1)
             {
                 if (i_TheGameNow.Player1CanToMove(makor, out yaad))
@@ -156,24 +153,7 @@ namespace matricxChekers
         }
 
 
-        //public static string player1CanToMOveTry(CheckersLogic i_TheGameNow /*, out string o_ActiveToMove*/)
-        //{
-        //    string o_ActiveToMove = null; // o_ActiveToMove
-        //    bool playerCanToMove = false;
-        //    Locat yaad;
-        //    foreach (var makor in i_TheGameNow.m_VellsOfPlayer1)
-        //    {
-        //        if (i_TheGameNow.Player1CanToMove(makor, out yaad))
-        //        {
-        //            o_ActiveToMove = makeStringOfActive(makor, yaad);
-        //            playerCanToMove = true;
-        //            break;
-        //        }
-        //    }
-        //    return o_ActiveToMove;
-        //    // return playerCanToMove;
-
-        //}
+        
 
 
     }

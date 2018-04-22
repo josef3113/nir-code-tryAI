@@ -58,11 +58,224 @@ namespace MatrixCheckers
 
         }
 
+        //private char[,] CreatBoard()
+
+        //{
+
+        //    char[,] boardOfGame = new char[m_SizeOfBoardGame, m_SizeOfBoardGame];
+
+        //    bool rowEven = true;
+
+
+
+        //    for (int i = 0; i < (m_SizeOfBoardGame - 2) / 2; i++)
+
+        //    {
+
+        //        for (int j = 0; j < m_SizeOfBoardGame; j += 2)
+
+        //        {
+
+        //            if (rowEven)
+
+        //            {
+
+        //                boardOfGame[i, j + 1] = 'o';
+
+        //                boardOfGame[(m_SizeOfBoardGame - 1) - i, j] = 'x';
+
+        //            }
+
+        //            else
+
+        //            {
+
+        //                boardOfGame[i, j] = 'o';
+
+        //                boardOfGame[(m_SizeOfBoardGame - 1) - i, j + 1] = 'x';
+
+        //            }
+
+        //        }
+
+        //        rowEven = !rowEven;
+
+        //    }
+
+
+
+        //    char[,] stringBaord = new char[2 * m_SizeOfBoardGame + 2, 4 * m_SizeOfBoardGame + 2];
+
+        //    StringBuilder lineBuffer = new StringBuilder(5 * m_SizeOfBoardGame);
+
+        //    lineBuffer.Append("==");
+
+        //    for (int i = 0; i < m_SizeOfBoardGame; i++)
+
+        //    {
+
+        //        lineBuffer.Append("====");
+
+        //    }
+
+
+
+        //    StringBuilder rowOfSignColsUp = new StringBuilder();
+
+        //    char signRow = 'a', signCol = 'A';
+
+        //    rowOfSignColsUp.Append(' ');
+
+        //    for (int i = 0; i < m_SizeOfBoardGame; i++)
+
+        //    {
+
+        //        rowOfSignColsUp.Append("  " + signCol + " ");
+
+        //        signCol++;
+
+        //    }
+
+
+        //    // start
+        //    for (int i = 0; i < rowOfSignColsUp.Length; i++)
+        //    {
+        //        stringBaord[0, i] = rowOfSignColsUp[i];
+        //    }
+
+        //    //end
+
+        //    //start
+        //    for (int i = 1; i < 2 * m_SizeOfBoardGame + 2; i += 2)
+
+        //    {
+        //        for (int j = 0; j < lineBuffer.Length; j++)
+        //        {
+        //            stringBaord[i, j] = lineBuffer[j];
+        //        }
+
+
+        //    }
+
+        //    //end
+
+
+
+        //    StringBuilder linesOfBoard = new StringBuilder();
+
+        //    int currentLine = 2;
+
+        //    for (int i = 0; i < m_SizeOfBoardGame; i++)
+
+        //    {
+
+        //        linesOfBoard.Clear();
+
+        //        linesOfBoard.Append(signRow);
+
+        //        for (int j = 0; j < m_SizeOfBoardGame; j++)
+
+        //        {
+
+        //            linesOfBoard.Append("| " + boardOfGame[i, j] + " ");
+
+        //        }
+
+        //        linesOfBoard.Append("|");
+
+
+        //        //start
+        //        for (int j = 0; j < linesOfBoard.Length; j++)
+        //        {
+        //            stringBaord[currentLine, j] = linesOfBoard[j];
+        //        }
+        //        //end
+        //        currentLine += 2;
+
+        //        signRow++;
+
+        //    }
+
+
+        //    //for(int i=0;i< (2* m_SizeOfBoardGame +2); i++)
+        //    //{
+        //    //    for (int j = 0; j < lineBuffer.Length; j++)
+        //    //    {
+        //    //        Console.Write(stringBaord[i,j]);
+        //    //    }
+        //    //    Console.WriteLine();
+        //    //}
+
+
+        //    return stringBaord;
+
+
+
+        //}
+
         private char[,] CreatBoard()
-
         {
+            char[,] boardOfGame = creatSkeletonOfBoard();
 
-            char[,] boardOfGame = new char[m_SizeOfBoardGame, m_SizeOfBoardGame];
+            char[,] stringBaord = new char[2 * m_SizeOfBoardGame + 2, 4 * m_SizeOfBoardGame + 2];
+
+            StringBuilder lineBuffer = creatLineBuffer();
+
+            StringBuilder rowOfSignColsUp = creatRowOfColSign();
+
+            char signRow = 'a';
+
+            for (int i = 0; i < rowOfSignColsUp.Length; i++)
+            {
+                stringBaord[0, i] = rowOfSignColsUp[i];
+            }
+
+            for (int i = 1; i < 2 * m_SizeOfBoardGame + 2; i += 2)
+
+            {
+                for (int j = 0; j < lineBuffer.Length; j++)
+                {
+                    stringBaord[i, j] = lineBuffer[j];
+                }
+
+            }
+
+            StringBuilder linesOfBoard = new StringBuilder();
+
+            int currentLine = 2;
+
+            for (int i = 0; i < m_SizeOfBoardGame; i++)
+            {
+
+                linesOfBoard.Clear();
+
+                linesOfBoard.Append(signRow);
+
+                for (int j = 0; j < m_SizeOfBoardGame; j++)
+                {
+                    linesOfBoard.Append("| " + boardOfGame[i, j] + " ");
+                }
+
+                linesOfBoard.Append("|");
+
+                for (int j = 0; j < linesOfBoard.Length; j++)
+                {
+                    stringBaord[currentLine, j] = linesOfBoard[j];
+                }
+
+                currentLine += 2;
+
+                signRow++;
+
+            }
+
+            return stringBaord;
+
+        }
+
+        private char[,] creatSkeletonOfBoard()
+        {
+            char[,] skeletonOfGame = new char[m_SizeOfBoardGame, m_SizeOfBoardGame];
 
             bool rowEven = true;
 
@@ -80,9 +293,9 @@ namespace MatrixCheckers
 
                     {
 
-                        boardOfGame[i, j + 1] = 'o';
+                        skeletonOfGame[i, j + 1] = 'o';
 
-                        boardOfGame[(m_SizeOfBoardGame - 1) - i, j] = 'x';
+                        skeletonOfGame[(m_SizeOfBoardGame - 1) - i, j] = 'x';
 
                     }
 
@@ -90,9 +303,9 @@ namespace MatrixCheckers
 
                     {
 
-                        boardOfGame[i, j] = 'o';
+                        skeletonOfGame[i, j] = 'o';
 
-                        boardOfGame[(m_SizeOfBoardGame - 1) - i, j + 1] = 'x';
+                        skeletonOfGame[(m_SizeOfBoardGame - 1) - i, j + 1] = 'x';
 
                     }
 
@@ -101,12 +314,12 @@ namespace MatrixCheckers
                 rowEven = !rowEven;
 
             }
+            return skeletonOfGame;
 
-
-
-            char[,] stringBaord = new char[2 * m_SizeOfBoardGame + 2, 4 * m_SizeOfBoardGame + 2];
-
-            StringBuilder lineBuffer = new StringBuilder(5 * m_SizeOfBoardGame);
+        }
+        private StringBuilder creatLineBuffer()
+        {
+            StringBuilder lineBuffer = new StringBuilder(4 * m_SizeOfBoardGame + 2);
 
             lineBuffer.Append("==");
 
@@ -117,12 +330,15 @@ namespace MatrixCheckers
                 lineBuffer.Append("====");
 
             }
+            return lineBuffer;
 
-
-
+        }
+        private StringBuilder creatRowOfColSign()
+        {
             StringBuilder rowOfSignColsUp = new StringBuilder();
 
-            char signRow = 'a', signCol = 'A';
+
+            char signCol = 'A';
 
             rowOfSignColsUp.Append(' ');
 
@@ -135,84 +351,9 @@ namespace MatrixCheckers
                 signCol++;
 
             }
-
-
-            // start
-            for (int i = 0; i < rowOfSignColsUp.Length; i++)
-            {
-                stringBaord[0, i] = rowOfSignColsUp[i];
-            }
-
-            //end
-
-            //start
-            for (int i = 1; i < 2 * m_SizeOfBoardGame + 2; i += 2)
-
-            {
-                for (int j = 0; j < lineBuffer.Length; j++)
-                {
-                    stringBaord[i, j] = lineBuffer[j];
-                }
-
-
-            }
-
-            //end
-
-
-
-            StringBuilder linesOfBoard = new StringBuilder();
-
-            int currentLine = 2;
-
-            for (int i = 0; i < m_SizeOfBoardGame; i++)
-
-            {
-
-                linesOfBoard.Clear();
-
-                linesOfBoard.Append(signRow);
-
-                for (int j = 0; j < m_SizeOfBoardGame; j++)
-
-                {
-
-                    linesOfBoard.Append("| " + boardOfGame[i, j] + " ");
-
-                }
-
-                linesOfBoard.Append("|");
-
-
-                //start
-                for (int j = 0; j < linesOfBoard.Length; j++)
-                {
-                    stringBaord[currentLine, j] = linesOfBoard[j];
-                }
-                //end
-                currentLine += 2;
-
-                signRow++;
-
-            }
-
-
-            //for(int i=0;i< (2* m_SizeOfBoardGame +2); i++)
-            //{
-            //    for (int j = 0; j < lineBuffer.Length; j++)
-            //    {
-            //        Console.Write(stringBaord[i,j]);
-            //    }
-            //    Console.WriteLine();
-            //}
-
-
-            return stringBaord;
-
-
+            return rowOfSignColsUp;
 
         }
-
 
         // not be static becous is print Board of specific item !!
 

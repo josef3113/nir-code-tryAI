@@ -48,8 +48,8 @@ namespace MatrixCheckers
         public void StartGameToPlay()
         {
             byte indexMoves = 0; // // rember to erase one day 
-            string[] gameMoveLazy = {/* "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd",
-                    "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" */}; // rember to erase one day 
+            string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd"/*,
+                    "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg"*/ }; // rember to erase one day 
            
             string moveInString = null;
             string lastMove = null;
@@ -64,7 +64,7 @@ namespace MatrixCheckers
                     Console.WriteLine("{2} move was {1}{0}", Environment.NewLine,lastMove, m_ActiveGame.NowPlaying == player1  ? m_player2.Name+" (x)": m_player1.Name+" (o)");
 
                 }
-                Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ? m_player1.Name : m_player2.Name);
+                Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ?  m_player1.Name + "(o)": m_player2.Name + "(x)" );
 
                 
 
@@ -147,6 +147,9 @@ namespace MatrixCheckers
             }
             m_player1.Points += sumOfPointsInList(m_ActiveGame.m_VellsOfPlayer1);
             m_player2.Points += sumOfPointsInList(m_ActiveGame.m_VellsOfPlayer2);
+
+            //
+            Console.WriteLine("points of Player 1 is:{0}{1}points of Player 2 is:{2}{1} ",m_player1.Points,Environment.NewLine,m_player2.Points);
 
             byte choicToAnoterGame;
             Console.WriteLine("if you want play again insert 1 other number smaller 255 if you want to stop play");
@@ -270,6 +273,10 @@ namespace MatrixCheckers
                 if (checkNotPassTheLimitChars(inputGameMove[0], inputGameMove[1], inputGameMove[3], inputGameMove[4]) && inputGameMove[2] == '>')
                 {
                     rightInput = inputGameMove;
+                }
+                else
+                {
+                    Console.WriteLine("input not legal");
                 }
             }
             else if (inputGameMove.Length == 0)
