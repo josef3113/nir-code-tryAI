@@ -94,8 +94,8 @@ namespace MatrixCheckers
                         // yosi end
                         // list1
                     }
-
-                    if (i >= (m_Size / 2 + 1) && (i + j) % 2 != 0)
+                    
+                    else if (i >= (m_Size / 2 + 1) && (i + j) % 2 != 0)
                     {
                         m_Mat[i, j] = (byte)eCheckers.CheckerX;
                         // yossi move vessel
@@ -104,6 +104,10 @@ namespace MatrixCheckers
                         currentVeesel.Y = (byte)i;
                         m_VellsOfPlayer2.Add(currentVeesel);
                         //yosi end 
+                    }
+                    else
+                    {
+                        m_Mat[i, j] = (byte)eCheckers.Non;
                     }
                 }
             }

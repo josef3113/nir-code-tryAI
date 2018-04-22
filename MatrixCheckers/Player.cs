@@ -7,18 +7,19 @@ namespace MatrixCheckers
 {
     class Player
     {
+        private string m_Name ;
+        private short m_Points = 0;
+
         public Player(string i_NameOfPlayer = null)
         {
-            if(i_NameOfPlayer != null)
+            if (i_NameOfPlayer != null)
             {
                 Name = i_NameOfPlayer;
             }
            
                 
         }
-        private string m_Name = null;
-        private short m_Points = 0;
-
+        
         public string Name
         {
             get

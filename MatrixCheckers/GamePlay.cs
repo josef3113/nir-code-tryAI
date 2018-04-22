@@ -52,15 +52,16 @@ namespace MatrixCheckers
                     "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg" */}; // rember to erase one day 
            
             string moveInString = null;
+            string lastMove = null;
 
             while (m_ActiveGame.GameOn() == true && m_WantToPlay == true)
             {
                 m_UiOfGame.PrintBoardGame();
 
                 
-                if(moveInString != null)
+                if(lastMove != null)
                 {
-                    Console.WriteLine("{2} move was {1}{0}", Environment.NewLine,moveInString, m_ActiveGame.NowPlaying == player1  ? m_player2.Name+" (x)": m_player1.Name+" (o)");
+                    Console.WriteLine("{2} move was {1}{0}", Environment.NewLine,lastMove, m_ActiveGame.NowPlaying == player1  ? m_player2.Name+" (x)": m_player1.Name+" (o)");
 
                 }
                 Console.WriteLine("{0}Playing now -> {1}{0}", Environment.NewLine, m_ActiveGame.NowPlaying == player1 ? m_player1.Name : m_player2.Name);
@@ -105,10 +106,8 @@ namespace MatrixCheckers
                 {
 
                     m_ActiveGame.PlayingVessel(moveInString);
-                    // ask nir what is ISTurnPass
-                   // moveInBoard(moveInString);
-
-                    if (m_ActiveGame.IsTurnPass)   // problem when reset game!
+                    
+                    if (m_ActiveGame.IsTurnPass)  
                     {
                         moveInBoard(moveInString);
                         if (m_ActiveGame.IsEated) 
@@ -118,10 +117,10 @@ namespace MatrixCheckers
 
                         
                         m_ActiveGame.ChangePlayer();
+                        lastMove = moveInString;
 
                     }
-                   // m_ActiveGame.ChangePlayer();
-
+                 
                 }
 
             }
@@ -134,7 +133,7 @@ namespace MatrixCheckers
 
         private void gameOver(byte i_ResonOfExit = (byte) 0 )
         {
-            if (i_ResonOfExit == (byte)1)
+            if (i_ResonOfExit == (byte)1)  // type 1 is when player choich Q
             {
                 if (m_ActiveGame.NowPlaying == player1)
                 {
@@ -160,6 +159,7 @@ namespace MatrixCheckers
             {
                 m_ActiveGame.resetGame();
                 m_UiOfGame.ResetBoardOfGame();
+                m_ActiveGame.PrintBoard();
 
                
             }
@@ -265,7 +265,7 @@ namespace MatrixCheckers
             // Console.WriteLine("Insert Move");
             string inputGameMove = Console.ReadLine();
             char capitalEnd = (char)((m_Size - 1) + 'A'), littleEnd = (char)((m_Size - 1) + 'a');
-            if (inputGameMove.Length >= 5)
+            if (inputGameMove.Length == 5)
             {
                 if (checkNotPassTheLimitChars(inputGameMove[0], inputGameMove[1], inputGameMove[3], inputGameMove[4]) && inputGameMove[2] == '>')
                 {
@@ -281,11 +281,9 @@ namespace MatrixCheckers
                 // yosi todo 
                 // Console.WriteLine("You are sure you want to end the game ? if yes enter Q or q again.");
                 gameOver(1);
-                rightInput = null;
-            }
-            
+                
+            }      
                
-            
             return rightInput;
         }
 

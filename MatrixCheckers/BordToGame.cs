@@ -25,10 +25,39 @@ namespace MatrixCheckers
         // be private becouse users dont need to know about this method
         public void ResetBoardOfGame()
         {
-            // chang this
-            m_BoardOfGame = CreatBoard();
+           
+               
+                char player1Sign = 'o';
+                char player2Sign = 'x';
+                char emptyPlace = ' ';
+                for (int i = 0; i < m_SizeOfBoardGame; i++)
+                {
+                    for (int j = 0; j < m_SizeOfBoardGame; j++)
+                    {
+                        if (i < (m_SizeOfBoardGame / 2 - 1) && (i + j) % 2 != 0)
+                        {
+                            // public char this[char i_Row, char i_Col]  
+                            this[(char)(i + 'a'), (char)(j + 'A')] = player1Sign;
+
+                        }
+
+                        else if (i >= (m_SizeOfBoardGame / 2 + 1) && (i + j) % 2 != 0)
+                        {
+                            this[(char)(i + 'a'), (char)(j + 'A')] = player2Sign;
+
+                        }
+                        else
+                        {
+                            this[(char)(i + 'a'), (char)(j + 'A')] = emptyPlace;
+                        }
+                    }
+                }
+
+
+            
+
         }
-          
+
         private char[][] CreatBoard()
 
         {

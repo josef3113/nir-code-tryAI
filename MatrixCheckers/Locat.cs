@@ -6,14 +6,39 @@ namespace MatrixCheckers
 {
     public struct Locat
     {
-        public Locat(int x, int y)
-        {
-            this.X = (byte)x;
-            this.Y = (byte)y;
+        private byte m_x;
+        private byte m_y;
 
+        public Locat(byte x, byte y)
+        {
+            m_x = x;
+            m_y = y;
+
+        }        
+
+        public byte X
+        {
+            get
+            {
+                return m_x;
+            }
+            set
+            {
+                m_x = value;
+            }
         }
-        public byte X { get; set; }
-        public byte Y { get; set; }
+
+        public byte Y
+        {
+            get
+            {
+                return m_y;
+            }
+            set
+            {
+                m_y = value;
+            }
+        }
 
     }
 }

@@ -46,7 +46,7 @@ namespace matricxChekers
         public static string TheMoveToDoForMultiEating(CheckersLogic i_TheGameNow, string i_LastMove)
         {
             string activeToContinueEat = null;
-            Locat forChech = new Locat((int)(i_LastMove[3]-'A'), (int)(i_LastMove[4]-'a'));
+            Locat forChech = new Locat((byte)(i_LastMove[3]-'A'), (byte)(i_LastMove[4]-'a'));
             Locat yaad;
             i_TheGameNow.CanToMultiEat(forChech, out yaad);
             activeToContinueEat = makeStringOfActive(forChech, yaad);
