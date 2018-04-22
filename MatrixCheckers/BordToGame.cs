@@ -10,7 +10,7 @@ namespace MatrixCheckers
     {
         public int m_SizeOfBoardGame;   // need to be private  readonly
 
-        public char[][] m_BoardOfGame;   // need to be private 
+        public char[,] m_BoardOfGame;   // need to be private 
 
         public BordToGame(int i_SizeOfBoard = 8)
 
@@ -58,7 +58,7 @@ namespace MatrixCheckers
 
         }
 
-        private char[][] CreatBoard()
+        private char[,] CreatBoard()
 
         {
 
@@ -104,7 +104,7 @@ namespace MatrixCheckers
 
 
 
-            char[][] stringBaord = new char[2 * m_SizeOfBoardGame + 2][];
+            char[,] stringBaord = new char[2 * m_SizeOfBoardGame + 2, 4 * m_SizeOfBoardGame + 2];
 
             StringBuilder lineBuffer = new StringBuilder(5 * m_SizeOfBoardGame);
 
@@ -136,15 +136,28 @@ namespace MatrixCheckers
 
             }
 
-            stringBaord[0] = rowOfSignColsUp.ToString().ToCharArray();
 
+            // start
+            for (int i = 0; i < rowOfSignColsUp.Length; i++)
+            {
+                stringBaord[0, i] = rowOfSignColsUp[i];
+            }
+
+            //end
+
+            //start
             for (int i = 1; i < 2 * m_SizeOfBoardGame + 2; i += 2)
 
             {
+                for (int j = 0; j < lineBuffer.Length; j++)
+                {
+                    stringBaord[i, j] = lineBuffer[j];
+                }
 
-                stringBaord[i] = lineBuffer.ToString().ToCharArray();    // check this 
 
             }
+
+            //end
 
 
 
@@ -170,8 +183,13 @@ namespace MatrixCheckers
 
                 linesOfBoard.Append("|");
 
-                stringBaord[currentLine] = linesOfBoard.ToString().ToCharArray();
 
+                //start
+                for (int j = 0; j < linesOfBoard.Length; j++)
+                {
+                    stringBaord[currentLine, j] = linesOfBoard[j];
+                }
+                //end
                 currentLine += 2;
 
                 signRow++;
@@ -179,7 +197,14 @@ namespace MatrixCheckers
             }
 
 
-
+            //for(int i=0;i< (2* m_SizeOfBoardGame +2); i++)
+            //{
+            //    for (int j = 0; j < lineBuffer.Length; j++)
+            //    {
+            //        Console.Write(stringBaord[i,j]);
+            //    }
+            //    Console.WriteLine();
+            //}
 
 
             return stringBaord;
@@ -187,6 +212,7 @@ namespace MatrixCheckers
 
 
         }
+
 
         // not be static becous is print Board of specific item !!
 
@@ -196,11 +222,15 @@ namespace MatrixCheckers
 
             // Ex02.ConsoleUtils.Screen.Clear();
 
-            for (int i = 0; i < 2 * m_SizeOfBoardGame + 2; i++)
+            for (int i = 0; i < (2 * m_SizeOfBoardGame + 2); i++)
 
             {
+                for (int j = 0; j < (2 + 4 * m_SizeOfBoardGame); j++)
+                {
+                    Console.Write(m_BoardOfGame[i, j]);
+                }
 
-                Console.WriteLine(m_BoardOfGame[i]);
+                Console.WriteLine();
 
             }
 
@@ -229,7 +259,7 @@ namespace MatrixCheckers
 
                 //todo
 
-                return m_BoardOfGame[(2 * (i_Row - 'a') + 2)][(4 * (i_Col - 'A') + 3)];
+                return m_BoardOfGame[(2 * (i_Row - 'a') + 2),(4 * (i_Col - 'A') + 3)];
 
             }
 
@@ -237,7 +267,7 @@ namespace MatrixCheckers
 
             {
 
-                m_BoardOfGame[(2 * (i_Row - 'a') + 2)][(4 * (i_Col - 'A') + 3)] = value;
+                m_BoardOfGame[(2 * (i_Row - 'a') + 2),(4 * (i_Col - 'A') + 3)] = value;
 
             }
 
