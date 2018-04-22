@@ -4,7 +4,7 @@ using MatrixCheckers;
 
 namespace matricxChekers
 {
-    static class AiForDamka 
+    static class AiForDamka
     {      
         public static string TheBestMoveToDoForPlayer2(CheckersLogic i_TheGameNow )
         {

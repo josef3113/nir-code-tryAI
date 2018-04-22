@@ -48,7 +48,7 @@ namespace MatrixCheckers
         public void StartGameToPlay()
         {
             byte indexMoves = 0; // // rember to erase one day 
-            string[] gameMoveLazy = { "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd"/*,
+            string[] gameMoveLazy = {/* "Dc>Ed", "Ef>Fe", "Cb>Dc", "Fe>Gd",
                     "Fc>He","Gf>Fe","Ed>Gf","Hg>Fe","He>Gf","Fg>Ef","Gf>Hg" ,"Gh>Fg"*/ }; // rember to erase one day 
            
             string moveInString = null;
@@ -101,26 +101,33 @@ namespace MatrixCheckers
                     }
                 }
 
-                
-                if (moveInString != null)
+                const byte lengthToQuit = 1 , legalLengthInput = 5 ;
+
+                if (moveInString != null && moveInString.Length == legalLengthInput)
                 {
 
                     m_ActiveGame.PlayingVessel(moveInString);
-                    
-                    if (m_ActiveGame.IsTurnPass)  
+
+                    if (m_ActiveGame.IsTurnPass)
                     {
                         moveInBoard(moveInString);
-                        if (m_ActiveGame.IsEated) 
+                        if (m_ActiveGame.IsEated)
                         {
-                            multiEatingByPlayer(moveInString); 
+                            multiEatingByPlayer(moveInString);
                         }
 
-                        
+
                         m_ActiveGame.ChangePlayer();
                         lastMove = moveInString;
 
                     }
-                 
+
+
+                }
+                else if (moveInString != null && moveInString.Length == lengthToQuit)
+                {
+                    gameOver(1);
+                    lastMove = null;
                 }
 
             }
@@ -162,7 +169,7 @@ namespace MatrixCheckers
             {
                 m_ActiveGame.resetGame();
                 m_UiOfGame.ResetBoardOfGame();
-                m_ActiveGame.PrintBoard();
+               // m_ActiveGame.PrintBoard();
 
                
             }
@@ -279,17 +286,24 @@ namespace MatrixCheckers
                     Console.WriteLine("input not legal");
                 }
             }
-            else if (inputGameMove.Length == 0)
+            else if (inputGameMove.Length != 1)
             {
-                Console.WriteLine("wow there is nothing here.");
+                //if (char.ToUpper(inputGameMove[0]) == 'Q')
+                //{
+                //    rightInput = inputGameMove;
+
+                //}
+
+
+
+                Console.WriteLine("wrong input, try again. in the format COLrow>COLrow");
             }
             else if (char.ToUpper(inputGameMove[0]) == 'Q')
             {
-                // yosi todo 
-                // Console.WriteLine("You are sure you want to end the game ? if yes enter Q or q again.");
-                gameOver(1);
-                
-            }      
+                rightInput = inputGameMove;
+
+            }
+            else { Console.WriteLine("HEREREREEEEE"); }
                
             return rightInput;
         }
